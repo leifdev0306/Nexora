@@ -1,3195 +1,568 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tu MiPyme · Gestión inteligente y tienda en línea para tu negocio</title>
-    <meta name="description" content="Tu MiPyme v2.4.0: gestiona tu negocio completo y crea tu tienda en línea. Disponible para Android y Windows. Funciona sin internet." />
-    <meta name="theme-color" content="#1a5cff" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
-    <style>
-        /* ============================================================
-           VARIABLES · Azul · Cyan · Limpio y coherente
-           ============================================================ */
-        :root {
-            --bg-base: #eef4fc;
-            --bg-soft: #e3ecf9;
-            --bg-card: rgba(255, 255, 255, 0.75);
-            --bg-card-solid: #ffffff;
-            --bg-glass: rgba(255, 255, 255, 0.55);
-
-            --text-primary: #0a1a33;
-            --text-secondary: #1c3352;
-            --text-muted: #607b9e;
-
-            --accent: #1a5cff;
-            --accent-dark: #0d47b3;
-            --accent-2: #06b6d4;
-            --accent-3: #0ea5e9;
-            --accent-soft: #dbe6ff;
-
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-
-            --grad-brand: linear-gradient(135deg, #1a5cff 0%, #06b6d4 100%);
-            --grad-cyan: linear-gradient(135deg, #06b6d4 0%, #1a5cff 100%);
-            --grad-android: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
-            --grad-windows: linear-gradient(135deg, #3b82f6 0%, #1a5cff 100%);
-            --grad-soft: linear-gradient(135deg, #dbe6ff 0%, #cffafe 100%);
-
-            --border: rgba(26, 92, 255, 0.14);
-            --border-strong: rgba(26, 92, 255, 0.28);
-
-            --shadow-xs: 0 2px 8px rgba(10, 26, 51, 0.06);
-            --shadow-sm: 0 6px 20px rgba(10, 26, 51, 0.08);
-            --shadow-md: 0 12px 40px rgba(10, 26, 51, 0.12);
-            --shadow-lg: 0 24px 70px rgba(10, 26, 51, 0.16);
-            --shadow-glow: 0 20px 60px rgba(26, 92, 255, 0.25);
-
-            --radius-sm: 12px;
-            --radius: 18px;
-            --radius-lg: 24px;
-            --radius-xl: 32px;
-
-            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            --font-display: 'Space Grotesk', 'Inter', sans-serif;
-        }
-
-        /* Tema oscuro: azul profundo elegante (solo por toggle manual) */
-        [data-theme="dark"] {
-            --bg-base: #0a1628;
-            --bg-soft: #0f1f3a;
-            --bg-card: rgba(255, 255, 255, 0.06);
-            --bg-card-solid: #122340;
-            --bg-glass: rgba(10, 22, 40, 0.55);
-
-            --text-primary: #eef4fc;
-            --text-secondary: #b8cbe8;
-            --text-muted: #7d95b6;
-
-            --accent: #4a8bff;
-            --accent-dark: #1a5cff;
-            --accent-2: #22d3ee;
-            --accent-3: #38bdf8;
-            --accent-soft: #1a2d52;
-
-            --border: rgba(74, 139, 255, 0.18);
-            --border-strong: rgba(74, 139, 255, 0.35);
-
-            --shadow-xs: 0 2px 8px rgba(0, 0, 0, 0.3);
-            --shadow-sm: 0 6px 20px rgba(0, 0, 0, 0.4);
-            --shadow-md: 0 12px 40px rgba(0, 0, 0, 0.5);
-            --shadow-lg: 0 24px 70px rgba(0, 0, 0, 0.6);
-            --shadow-glow: 0 20px 60px rgba(74, 139, 255, 0.35);
-        }
-
-        /* ============================================================
-           RESET
-           ============================================================ */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-
-        body {
-            font-family: var(--font-sans);
-            background: var(--bg-base);
-            color: var(--text-primary);
-            line-height: 1.6;
-            overflow-x: hidden;
-            min-height: 100vh;
-            transition: background 0.5s ease, color 0.3s ease;
-            position: relative;
-        }
-
-        /* Fondo decorativo suave */
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            z-index: -2;
-            background:
-                radial-gradient(ellipse 70% 50% at 15% 0%, rgba(26, 92, 255, 0.12), transparent 60%),
-                radial-gradient(ellipse 60% 45% at 85% 100%, rgba(6, 182, 212, 0.10), transparent 60%),
-                radial-gradient(ellipse 80% 60% at 50% 50%, rgba(219, 230, 255, 0.4), transparent 70%),
-                var(--bg-base);
-            pointer-events: none;
-        }
-        [data-theme="dark"] body::before {
-            background:
-                radial-gradient(ellipse 70% 50% at 15% 0%, rgba(26, 92, 255, 0.22), transparent 60%),
-                radial-gradient(ellipse 60% 45% at 85% 100%, rgba(6, 182, 212, 0.16), transparent 60%),
-                radial-gradient(ellipse 80% 60% at 50% 50%, rgba(15, 31, 58, 0.8), transparent 70%),
-                var(--bg-base);
-        }
-
-        a { color: inherit; text-decoration: none; }
-
-        .container {
-            max-width: 1240px;
-            margin: 0 auto;
-            padding: 0 24px;
-            position: relative;
-            z-index: 2;
-            width: 100%;
-        }
-
-        /* ===== Canvas partículas ===== */
-        #money-canvas {
-            position: fixed;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-            opacity: 0.35;
-        }
-        [data-theme="dark"] #money-canvas { opacity: 0.25; }
-
-        /* ===== Cursor glow ===== */
-        .cursor-glow {
-            position: fixed;
-            width: 480px;
-            height: 480px;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 1;
-            background: radial-gradient(circle, rgba(26, 92, 255, 0.10), transparent 60%);
-            transform: translate(-50%, -50%);
-            transition: opacity 0.4s;
-            opacity: 0;
-        }
-        [data-theme="dark"] .cursor-glow {
-            background: radial-gradient(circle, rgba(74, 139, 255, 0.14), transparent 60%);
-        }
-        @media (hover: hover) and (pointer: fine) {
-            .cursor-glow { opacity: 1; }
-        }
-
-        /* ===== Botón tema ===== */
-        .theme-toggle {
-            position: fixed;
-            bottom: 28px;
-            right: 28px;
-            z-index: 999;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: var(--bg-card);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--border-strong);
-            color: var(--text-primary);
-            font-size: 22px;
-            cursor: pointer;
-            box-shadow: var(--shadow-md), 0 0 20px rgba(26, 92, 255, 0.15);
-            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .theme-toggle:hover {
-            transform: scale(1.1) rotate(8deg);
-            border-color: var(--accent);
-            box-shadow: var(--shadow-lg), 0 0 40px rgba(26, 92, 255, 0.35);
-        }
-
-        /* ============================================================
-           HEADER
-           ============================================================ */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            padding: 14px 0;
-            z-index: 1000;
-            background: rgba(255, 255, 255, 0.5);
-            backdrop-filter: blur(20px) saturate(1.6);
-            -webkit-backdrop-filter: blur(20px) saturate(1.6);
-            border-bottom: 1px solid rgba(26, 92, 255, 0.08);
-            transition: all 0.35s ease;
-        }
-        [data-theme="dark"] header {
-            background: rgba(10, 22, 40, 0.5);
-            border-bottom: 1px solid rgba(74, 139, 255, 0.08);
-        }
-        header.scrolled {
-            background: rgba(255, 255, 255, 0.85);
-            box-shadow: 0 4px 30px rgba(10, 26, 51, 0.06);
-            padding: 10px 0;
-        }
-        [data-theme="dark"] header.scrolled {
-            background: rgba(10, 22, 40, 0.9);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
-        }
-        .header-inner {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-        }
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-family: var(--font-display);
-            font-weight: 700;
-            font-size: 22px;
-            letter-spacing: -0.02em;
-            transition: transform 0.3s ease;
-        }
-        .logo:hover { transform: scale(1.02); }
-        .logo-mark {
-            width: 34px;
-            height: 34px;
-            border-radius: 10px;
-            background: var(--grad-brand);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            box-shadow: 0 6px 18px rgba(26, 92, 255, 0.35);
-        }
-        .logo span { color: var(--accent); }
-
-        nav {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            flex-wrap: wrap;
-        }
-        nav > a {
-            font-size: 13.5px;
-            font-weight: 500;
-            color: var(--text-secondary);
-            padding: 8px 14px;
-            border-radius: 50px;
-            transition: all 0.25s;
-        }
-        nav > a:hover {
-            color: var(--accent);
-            background: var(--accent-soft);
-        }
-        nav > a.store-link {
-            color: var(--accent);
-            font-weight: 700;
-            position: relative;
-        }
-        nav > a.store-link::before {
-            content: '';
-            position: absolute;
-            left: 6px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--accent-2);
-            animation: pulseDot 2s ease-in-out infinite;
-        }
-        nav > a.store-link { padding-left: 18px; }
-        @keyframes pulseDot {
-            0%, 100% { opacity: 1; transform: translateY(-50%) scale(1); }
-            50% { opacity: 0.4; transform: translateY(-50%) scale(0.7); }
-        }
-
-        .nav-btn {
-            padding: 9px 16px;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 12.5px;
-            border: none;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-family: inherit;
-            color: #fff;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            letter-spacing: 0.01em;
-        }
-        .nav-btn.android { background: var(--grad-android); box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3); }
-        .nav-btn.windows { background: var(--grad-windows); box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3); }
-        .nav-btn:hover { transform: translateY(-2px); }
-        .nav-btn.android:hover { box-shadow: 0 8px 24px rgba(16, 185, 129, 0.45); }
-        .nav-btn.windows:hover { box-shadow: 0 8px 24px rgba(59, 130, 246, 0.45); }
-
-        .nav-portfolio {
-            background: var(--grad-brand) !important;
-            color: #fff !important;
-            font-weight: 700 !important;
-            padding: 9px 16px !important;
-            box-shadow: 0 4px 16px rgba(26, 92, 255, 0.35) !important;
-        }
-        .nav-portfolio:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(26, 92, 255, 0.5) !important;
-            background: var(--grad-brand) !important;
-        }
-
-        .menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 26px;
-            color: var(--text-primary);
-            cursor: pointer;
-            padding: 6px 10px;
-            border-radius: 10px;
-            transition: background 0.2s;
-        }
-        .menu-toggle:hover { background: var(--accent-soft); }
-
-        /* ============================================================
-           HERO
-           ============================================================ */
-        .hero {
-            padding: 150px 0 80px;
-            display: flex;
-            align-items: center;
-            position: relative;
-            min-height: 100vh;
-        }
-        .hero-grid {
-            display: grid;
-            grid-template-columns: 1fr 1.15fr;
-            gap: 56px;
-            align-items: center;
-            width: 100%;
-        }
-        .hero-content { animation: fadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1); }
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--bg-card);
-            backdrop-filter: blur(16px);
-            color: var(--text-primary);
-            font-weight: 600;
-            font-size: 12.5px;
-            padding: 7px 7px 7px 16px;
-            border-radius: 50px;
-            margin-bottom: 26px;
-            border: 1px solid var(--border-strong);
-            box-shadow: var(--shadow-xs);
-        }
-        .hero-badge .version {
-            color: var(--text-muted);
-            font-weight: 600;
-            font-family: var(--font-display);
-        }
-        .hero-badge .new-pill {
-            background: var(--grad-brand);
-            color: #fff;
-            padding: 4px 12px;
-            border-radius: 50px;
-            font-size: 10.5px;
-            font-weight: 800;
-            letter-spacing: 0.08em;
-            box-shadow: 0 4px 12px rgba(26, 92, 255, 0.4);
-            animation: badgePulse 2.4s ease-in-out infinite;
-        }
-        @keyframes badgePulse {
-            0%, 100% { box-shadow: 0 4px 12px rgba(26, 92, 255, 0.4); }
-            50% { box-shadow: 0 4px 20px rgba(26, 92, 255, 0.75); }
-        }
-        .hero-badge .whats-new {
-            color: var(--accent);
-            background: var(--accent-soft);
-            padding: 5px 14px;
-            border-radius: 30px;
-            font-size: 11px;
-            font-weight: 700;
-            transition: all 0.3s;
-        }
-        .hero-badge .whats-new:hover {
-            background: var(--accent);
-            color: #fff;
-            transform: translateX(2px);
-        }
-
-        .hero h1 {
-            font-family: var(--font-display);
-            font-size: 58px;
-            font-weight: 700;
-            line-height: 1.03;
-            letter-spacing: -0.035em;
-            color: var(--text-primary);
-            margin-bottom: 22px;
-        }
-        .hero h1 .highlight {
-            background: var(--grad-brand);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-size: 200% 200%;
-            animation: gradientShift 8s ease infinite;
-        }
-        @keyframes gradientShift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-        .hero p {
-            font-size: 17.5px;
-            color: var(--text-secondary);
-            max-width: 500px;
-            margin-bottom: 34px;
-            line-height: 1.7;
-        }
-        .hero p strong { color: var(--text-primary); font-weight: 700; }
-
-        .hero-actions {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 12px;
-        }
-        .hero-actions .primary-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            align-items: center;
-        }
-
-        /* Botones */
-        .btn-primary {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 16px 30px;
-            border-radius: 50px;
-            font-family: var(--font-display);
-            font-weight: 700;
-            font-size: 14.5px;
-            border: none;
-            cursor: pointer;
-            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-            color: #fff;
-            letter-spacing: 0.02em;
-            position: relative;
-            overflow: hidden;
-        }
-        .btn-primary::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(120deg, transparent 30%, rgba(255, 255, 255, 0.3) 50%, transparent 70%);
-            transform: translateX(-100%);
-            transition: transform 0.7s;
-        }
-        .btn-primary:hover::before { transform: translateX(100%); }
-        .btn-primary:hover { transform: translateY(-4px) scale(1.02); }
-
-        .btn-android {
-            background: var(--grad-android);
-            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.35);
-        }
-        .btn-android:hover {
-            box-shadow: 0 16px 45px rgba(16, 185, 129, 0.5);
-        }
-        .btn-windows {
-            background: var(--grad-windows);
-            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.35);
-        }
-        .btn-windows:hover {
-            box-shadow: 0 16px 45px rgba(59, 130, 246, 0.5);
-        }
-
-        .btn-secondary {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 15px 26px;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 14.5px;
-            background: var(--bg-card);
-            backdrop-filter: blur(12px);
-            color: var(--text-primary);
-            border: 1px solid var(--border-strong);
-            cursor: pointer;
-            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-            font-family: inherit;
-        }
-        .btn-secondary:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-            transform: translateY(-4px);
-            box-shadow: 0 12px 30px rgba(26, 92, 255, 0.2);
-        }
-
-        .hero-actions .fallback-link {
-            font-size: 13px;
-            color: var(--text-muted);
-            transition: color 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .hero-actions .fallback-link:hover { color: var(--accent); }
-
-        /* ============================================================
-           MOCKUP TIENDA EN LÍNEA (único, grande, detallado)
-           ============================================================ */
-        .hero-showcase {
-            position: relative;
-            perspective: 1600px;
-            animation: fadeUp 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
-        }
-        .showcase-glow {
-            position: absolute;
-            inset: -10%;
-            background: radial-gradient(circle at center, rgba(26, 92, 255, 0.28), transparent 60%);
-            filter: blur(60px);
-            z-index: 0;
-            pointer-events: none;
-            animation: glowPulse 5s ease-in-out infinite;
-        }
-        @keyframes glowPulse {
-            0%, 100% { opacity: 0.7; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.08); }
-        }
-
-        .store-window {
-            position: relative;
-            z-index: 1;
-            background: var(--bg-card-solid);
-            border-radius: var(--radius-xl);
-            border: 1px solid var(--border-strong);
-            box-shadow: var(--shadow-lg), 0 0 60px rgba(26, 92, 255, 0.2);
-            padding: 14px;
-            transform: rotateY(-4deg) rotateX(2deg);
-            transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        .store-window:hover {
-            transform: rotateY(0) rotateX(0) translateY(-6px);
-            box-shadow: var(--shadow-lg), 0 0 100px rgba(26, 92, 255, 0.35);
-        }
-
-        .window-chrome {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 6px 8px 12px;
-        }
-        .chrome-dots { display: flex; gap: 6px; }
-        .chrome-dot { width: 10px; height: 10px; border-radius: 50%; }
-        .chrome-dot.r { background: #ff5f57; }
-        .chrome-dot.y { background: #febc2e; }
-        .chrome-dot.g { background: #28c840; }
-        .chrome-url {
-            flex: 1;
-            background: rgba(26, 92, 255, 0.06);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 6px 12px;
-            font-size: 11px;
-            color: var(--text-muted);
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-        }
-        .chrome-url::before { content: '🔒'; font-size: 10px; }
-        .chrome-live {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 10px;
-            font-weight: 800;
-            color: var(--success);
-            padding: 4px 10px;
-            background: rgba(16, 185, 129, 0.12);
-            border-radius: 30px;
-            letter-spacing: 0.06em;
-        }
-        .chrome-live::before {
-            content: '';
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--success);
-            animation: pulseDot 1.6s ease-in-out infinite;
-        }
-
-        .store-view {
-            background: linear-gradient(160deg, #f6faff 0%, #eaf2ff 100%);
-            border-radius: var(--radius);
-            padding: 20px 18px;
-            overflow: hidden;
-            box-shadow: inset 0 0 40px rgba(26, 92, 255, 0.04);
-        }
-        [data-theme="dark"] .store-view {
-            background: linear-gradient(160deg, #0f1f3a 0%, #122340 100%);
-            box-shadow: inset 0 0 40px rgba(74, 139, 255, 0.08);
-        }
-
-        .store-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-bottom: 12px;
-            border-bottom: 1px solid var(--border);
-            margin-bottom: 14px;
-            gap: 10px;
-        }
-        .store-brand {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .store-logo-mark {
-            width: 30px;
-            height: 30px;
-            border-radius: 9px;
-            background: var(--grad-brand);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 15px;
-            color: #fff;
-            box-shadow: 0 4px 12px rgba(26, 92, 255, 0.35);
-            flex-shrink: 0;
-        }
-        .store-name-mock {
-            font-family: var(--font-display);
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--text-primary);
-            letter-spacing: -0.02em;
-            line-height: 1.1;
-        }
-        .store-name-mock small {
-            display: block;
-            font-size: 9px;
-            color: var(--text-muted);
-            font-weight: 600;
-            letter-spacing: 0.05em;
-            margin-top: 2px;
-        }
-        .store-verified {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            font-size: 9px;
-            background: var(--grad-brand);
-            color: #fff;
-            padding: 4px 10px;
-            border-radius: 30px;
-            font-weight: 800;
-            letter-spacing: 0.06em;
-            box-shadow: 0 4px 12px rgba(26, 92, 255, 0.35);
-        }
-
-        .store-search {
-            background: rgba(26, 92, 255, 0.05);
-            border: 1px solid var(--border);
-            border-radius: 30px;
-            padding: 8px 14px;
-            font-size: 11px;
-            color: var(--text-muted);
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .store-search .placeholder { flex: 1; font-weight: 500; }
-        .store-search .shortcut {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            padding: 1px 6px;
-            font-size: 9px;
-            font-weight: 700;
-            color: var(--text-muted);
-        }
-
-        .store-chips {
-            display: flex;
-            gap: 6px;
-            margin-bottom: 14px;
-            overflow: hidden;
-            flex-wrap: wrap;
-        }
-        .store-chips span {
-            font-size: 9.5px;
-            padding: 5px 12px;
-            border-radius: 30px;
-            background: rgba(26, 92, 255, 0.07);
-            color: var(--text-muted);
-            font-weight: 700;
-            white-space: nowrap;
-            border: 1px solid transparent;
-        }
-        .store-chips span.active {
-            background: var(--grad-brand);
-            color: #fff;
-            box-shadow: 0 4px 12px rgba(26, 92, 255, 0.35);
-            border-color: transparent;
-        }
-
-        .store-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-        }
-        .store-item {
-            background: var(--bg-card-solid);
-            border-radius: 14px;
-            padding: 12px 10px;
-            border: 1px solid var(--border);
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(10, 26, 51, 0.04);
-        }
-        [data-theme="dark"] .store-item {
-            background: rgba(255, 255, 255, 0.04);
-        }
-        .store-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: var(--grad-brand);
-            transform: translateX(-100%);
-            transition: transform 0.5s;
-        }
-        .store-item:hover {
-            transform: translateY(-6px);
-            border-color: var(--accent);
-            box-shadow: 0 12px 28px rgba(26, 92, 255, 0.22);
-        }
-        .store-item:hover::before { transform: translateX(0); }
-        .store-thumb {
-            height: 52px;
-            background: linear-gradient(135deg, rgba(26, 92, 255, 0.12), rgba(6, 182, 212, 0.08));
-            border-radius: 10px;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 26px;
-            transition: transform 0.4s;
-        }
-        .store-item:hover .store-thumb { transform: scale(1.08); }
-        .store-item-name {
-            font-size: 10px;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 4px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .store-item-price {
-            font-size: 12px;
-            font-weight: 800;
-            background: var(--grad-brand);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            line-height: 1.2;
-        }
-        .store-item-stock {
-            font-size: 8.5px;
-            color: var(--text-muted);
-            margin-top: 3px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .store-item-stock .dot {
-            width: 5px;
-            height: 5px;
-            border-radius: 50%;
-            background: var(--success);
-        }
-
-        .store-footer-mock {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 14px;
-            padding-top: 12px;
-            border-top: 1px solid var(--border);
-            font-size: 10px;
-            color: var(--text-muted);
-            font-weight: 600;
-        }
-        .store-footer-mock .cart {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: var(--grad-brand);
-            color: #fff;
-            padding: 6px 14px;
-            border-radius: 30px;
-            font-weight: 800;
-            font-size: 10px;
-            box-shadow: 0 4px 14px rgba(26, 92, 255, 0.35);
-        }
-
-        /* ============================================================
-           MARQUEE (scroll horizontal)
-           ============================================================ */
-        .marquee {
-            padding: 22px 0;
-            overflow: hidden;
-            background: var(--bg-card-solid);
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-            position: relative;
-            z-index: 2;
-        }
-        .marquee::before,
-        .marquee::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 100px;
-            z-index: 3;
-            pointer-events: none;
-        }
-        .marquee::before {
-            left: 0;
-            background: linear-gradient(90deg, var(--bg-card-solid), transparent);
-        }
-        .marquee::after {
-            right: 0;
-            background: linear-gradient(270deg, var(--bg-card-solid), transparent);
-        }
-        .marquee-track {
-            display: flex;
-            width: max-content;
-            animation: marqueeScroll 45s linear infinite;
-        }
-        .marquee:hover .marquee-track { animation-play-state: paused; }
-        @keyframes marqueeScroll {
-            to { transform: translateX(-50%); }
-        }
-        .marquee-group {
-            display: flex;
-            gap: 50px;
-            padding-right: 50px;
-            flex-shrink: 0;
-        }
-        .marquee-item {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            font-family: var(--font-display);
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--text-secondary);
-            white-space: nowrap;
-            letter-spacing: -0.01em;
-        }
-        .marquee-item .emoji {
-            font-size: 20px;
-            filter: saturate(1.2);
-        }
-        .marquee-item .dot-sep {
-            width: 5px;
-            height: 5px;
-            border-radius: 50%;
-            background: var(--grad-brand);
-            margin-left: 30px;
-            display: inline-block;
-        }
-
-        /* ============================================================
-           SECCIONES GENERALES
-           ============================================================ */
-        section { padding: 90px 0; position: relative; z-index: 1; }
-
-        .section-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--bg-card);
-            backdrop-filter: blur(16px);
-            border: 1px solid var(--border-strong);
-            padding: 6px 16px;
-            border-radius: 50px;
-            font-size: 11.5px;
-            font-weight: 700;
-            color: var(--accent);
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            margin: 0 auto 20px;
-            width: fit-content;
-        }
-
-        .section-title {
-            font-family: var(--font-display);
-            font-size: 44px;
-            font-weight: 700;
-            letter-spacing: -0.03em;
-            text-align: center;
-            margin-bottom: 16px;
-            color: var(--text-primary);
-            line-height: 1.1;
-        }
-        .section-title .accent {
-            background: var(--grad-brand);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .section-subtitle {
-            text-align: center;
-            font-size: 17px;
-            color: var(--text-secondary);
-            max-width: 620px;
-            margin: 0 auto 56px;
-            line-height: 1.7;
-        }
-
-        .fade-up {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .fade-up.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* ============================================================
-           STATS
-           ============================================================ */
-        .stats-section { padding: 40px 0 30px; }
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 18px;
-            max-width: 1040px;
-            margin: 0 auto;
-        }
-        .stat-card {
-            text-align: center;
-            padding: 26px 16px;
-            background: var(--bg-card);
-            backdrop-filter: blur(16px);
-            border-radius: var(--radius);
-            border: 1px solid var(--border-strong);
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: var(--shadow-xs);
-            position: relative;
-            overflow: hidden;
-        }
-        .stat-card::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, transparent 40%, rgba(26, 92, 255, 0.06) 50%, transparent 60%);
-            transform: translateX(-100%);
-            transition: transform 0.7s;
-            pointer-events: none;
-        }
-        .stat-card:hover::after { transform: translateX(100%); }
-        .stat-card:hover {
-            transform: translateY(-6px);
-            border-color: var(--accent);
-            box-shadow: var(--shadow-md), 0 0 30px rgba(26, 92, 255, 0.15);
-        }
-        .stat-value {
-            font-family: var(--font-display);
-            font-size: 36px;
-            font-weight: 700;
-            background: var(--grad-brand);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: -0.03em;
-            line-height: 1;
-            margin-bottom: 8px;
-        }
-        .stat-label {
-            font-size: 12.5px;
-            color: var(--text-muted);
-            font-weight: 600;
-            line-height: 1.3;
-        }
-
-        /* ============================================================
-           STORE SHOWCASE
-           ============================================================ */
-        .store-showcase-section {
-            padding: 100px 0;
-            position: relative;
-        }
-        .store-showcase-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-            max-width: 1160px;
-            margin: 0 auto;
-        }
-        .store-copy h2 {
-            font-family: var(--font-display);
-            font-size: 46px;
-            font-weight: 700;
-            letter-spacing: -0.03em;
-            line-height: 1.05;
-            color: var(--text-primary);
-            margin-bottom: 22px;
-        }
-        .store-copy h2 .grad {
-            background: var(--grad-brand);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-size: 200% 200%;
-            animation: gradientShift 8s ease infinite;
-        }
-        .store-copy > p {
-            font-size: 16.5px;
-            color: var(--text-secondary);
-            line-height: 1.75;
-            margin-bottom: 30px;
-            max-width: 500px;
-        }
-        .store-features-list {
-            list-style: none;
-            margin-bottom: 34px;
-        }
-        .store-features-list li {
-            display: flex;
-            align-items: flex-start;
-            gap: 14px;
-            padding: 11px 0;
-            font-size: 15px;
-            color: var(--text-secondary);
-            line-height: 1.55;
-            transition: transform 0.3s;
-        }
-        .store-features-list li:hover { transform: translateX(5px); }
-        .store-features-list li .bullet {
-            width: 26px;
-            height: 26px;
-            border-radius: 50%;
-            background: var(--grad-brand);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 13px;
-            flex-shrink: 0;
-            color: #fff;
-            font-weight: 800;
-            box-shadow: 0 4px 12px rgba(26, 92, 255, 0.3);
-        }
-        .store-features-list li strong { color: var(--text-primary); font-weight: 700; }
-        .store-cta-row {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
-        /* Preview grande de la tienda dentro de la sección showcase */
-        .store-preview-big {
-            position: relative;
-            perspective: 1600px;
-        }
-        .store-preview-big .showcase-glow {
-            inset: -15%;
-            background: radial-gradient(circle at center, rgba(6, 182, 212, 0.28), transparent 60%);
-        }
-        .store-preview-big .store-window {
-            transform: rotateY(4deg) rotateX(2deg);
-        }
-        .store-preview-big .store-window:hover {
-            transform: rotateY(0) rotateX(0) translateY(-6px);
-        }
-
-        /* ============================================================
-           DOWNLOADS
-           ============================================================ */
-        .downloads-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 26px;
-            max-width: 1080px;
-            margin: 0 auto;
-        }
-        .download-card {
-            position: relative;
-            background: var(--bg-card);
-            backdrop-filter: blur(16px);
-            border-radius: var(--radius-lg);
-            padding: 36px 26px 30px;
-            border: 1px solid var(--border-strong);
-            transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: var(--shadow-xs);
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            overflow: hidden;
-        }
-        .download-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.5s;
-        }
-        .download-card.android64::before { background: var(--grad-android); }
-        .download-card.android32::before { background: var(--grad-brand); }
-        .download-card.windows::before { background: var(--grad-windows); }
-        .download-card:hover::before { transform: scaleX(1); }
-        .download-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-lg), 0 0 40px rgba(26, 92, 255, 0.18);
-            border-color: var(--accent);
-        }
-
-        .download-icon {
-            width: 74px;
-            height: 74px;
-            border-radius: 22px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 34px;
-            margin-bottom: 18px;
-            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        .download-card:hover .download-icon { transform: scale(1.08) rotate(-6deg); }
-        .download-card.android64 .download-icon {
-            background: rgba(16, 185, 129, 0.12);
-            box-shadow: 0 8px 24px rgba(16, 185, 129, 0.15);
-        }
-        .download-card.android32 .download-icon {
-            background: rgba(26, 92, 255, 0.12);
-            box-shadow: 0 8px 24px rgba(26, 92, 255, 0.15);
-        }
-        .download-card.windows .download-icon {
-            background: rgba(59, 130, 246, 0.12);
-            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.15);
-        }
-
-        .download-card h3 {
-            font-family: var(--font-display);
-            font-size: 19px;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 8px;
-            letter-spacing: -0.01em;
-        }
-        .download-desc {
-            font-size: 13.5px;
-            color: var(--text-secondary);
-            line-height: 1.6;
-            margin-bottom: 16px;
-            min-height: 44px;
-        }
-        .download-meta {
-            font-size: 11.5px;
-            color: var(--text-muted);
-            margin-bottom: 20px;
-            font-weight: 600;
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        .download-meta span { display: inline-flex; align-items: center; gap: 4px; }
-
-        .download-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 14px 24px;
-            border-radius: 50px;
-            font-family: var(--font-display);
-            font-weight: 700;
-            font-size: 13.5px;
-            border: none;
-            cursor: pointer;
-            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-            width: 100%;
-            color: #fff;
-            letter-spacing: 0.02em;
-            position: relative;
-            overflow: hidden;
-        }
-        .download-btn::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(120deg, transparent 30%, rgba(255, 255, 255, 0.3) 50%, transparent 70%);
-            transform: translateX(-100%);
-            transition: transform 0.7s;
-        }
-        .download-btn:hover::before { transform: translateX(100%); }
-        .download-card.android64 .download-btn { background: var(--grad-android); box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3); }
-        .download-card.android32 .download-btn { background: var(--grad-brand); box-shadow: 0 8px 24px rgba(26, 92, 255, 0.3); }
-        .download-card.windows .download-btn { background: var(--grad-windows); box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3); }
-        .download-btn:hover { transform: translateY(-3px); }
-        .download-card.android64 .download-btn:hover { box-shadow: 0 14px 40px rgba(16, 185, 129, 0.5); }
-        .download-card.android32 .download-btn:hover { box-shadow: 0 14px 40px rgba(26, 92, 255, 0.5); }
-        .download-card.windows .download-btn:hover { box-shadow: 0 14px 40px rgba(59, 130, 246, 0.5); }
-
-        .recommended-badge {
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--grad-brand);
-            color: #fff;
-            font-family: var(--font-display);
-            font-size: 10px;
-            font-weight: 800;
-            letter-spacing: 0.1em;
-            padding: 6px 16px;
-            border-radius: 50px;
-            box-shadow: 0 6px 20px rgba(26, 92, 255, 0.5);
-            white-space: nowrap;
-            z-index: 3;
-            animation: badgePulse 2.4s ease-in-out infinite;
-        }
-        .download-card.recommended {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 2px rgba(26, 92, 255, 0.3), var(--shadow-lg);
-        }
-
-        /* ============================================================
-           FEATURES
-           ============================================================ */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 22px;
-        }
-        .feature-card {
-            background: var(--bg-card);
-            backdrop-filter: blur(16px);
-            border-radius: var(--radius);
-            padding: 28px 24px;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: var(--shadow-xs);
-            border: 1px solid var(--border-strong);
-            position: relative;
-            overflow: hidden;
-        }
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 3px;
-            height: 100%;
-            background: var(--grad-brand);
-            transform: scaleY(0);
-            transform-origin: top;
-            transition: transform 0.4s;
-        }
-        .feature-card:hover::before { transform: scaleY(1); }
-        .feature-card:hover {
-            transform: translateY(-6px);
-            border-color: var(--accent);
-            box-shadow: var(--shadow-md), 0 0 30px rgba(26, 92, 255, 0.15);
-        }
-        .feature-card .icon {
-            font-size: 28px;
-            margin-bottom: 14px;
-            display: inline-block;
-            transition: transform 0.4s;
-        }
-        .feature-card:hover .icon { transform: scale(1.12) rotate(-6deg); }
-        .feature-card h3 {
-            font-family: var(--font-display);
-            font-size: 16.5px;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 7px;
-            letter-spacing: -0.01em;
-        }
-        .feature-card p {
-            font-size: 13.5px;
-            color: var(--text-secondary);
-            line-height: 1.65;
-        }
-        .feature-tag {
-            display: inline-block;
-            margin-top: 12px;
-            font-size: 10px;
-            font-weight: 800;
-            padding: 4px 12px;
-            border-radius: 50px;
-            background: var(--accent-soft);
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-        }
-        .feature-tag.new { background: var(--grad-brand); color: #fff; }
-        .feature-tag.free { background: rgba(16, 185, 129, 0.14); color: var(--success); }
-        .feature-tag.store { background: var(--grad-cyan); color: #fff; }
-
-        /* ============================================================
-           PLANS
-           ============================================================ */
-        .plans-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            max-width: 920px;
-            margin: 0 auto;
-        }
-        .plan-card {
-            background: var(--bg-card);
-            backdrop-filter: blur(16px);
-            border-radius: var(--radius-xl);
-            padding: 40px 32px;
-            border: 1px solid var(--border-strong);
-            transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: var(--shadow-xs);
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        .plan-card.popular {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 2px rgba(26, 92, 255, 0.25), var(--shadow-lg), 0 0 60px rgba(26, 92, 255, 0.2);
-        }
-        .plan-card:not(.popular):hover {
-            transform: translateY(-8px);
-            border-color: var(--accent);
-            box-shadow: var(--shadow-lg), 0 0 40px rgba(26, 92, 255, 0.18);
-        }
-        .plan-card.popular:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 0 0 2px rgba(26, 92, 255, 0.4), var(--shadow-lg), 0 0 80px rgba(26, 92, 255, 0.35);
-        }
-
-        .plan-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: var(--grad-brand);
-            color: #fff;
-            font-size: 10.5px;
-            font-weight: 800;
-            padding: 5px 18px;
-            border-radius: 50px;
-            letter-spacing: 0.1em;
-            margin-bottom: 16px;
-            box-shadow: 0 6px 20px rgba(26, 92, 255, 0.4);
-        }
-        .plan-trial {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: var(--accent-soft);
-            color: var(--accent);
-            font-size: 10.5px;
-            font-weight: 800;
-            padding: 5px 16px;
-            border-radius: 50px;
-            letter-spacing: 0.08em;
-            margin-bottom: 16px;
-        }
-        .plan-name {
-            font-family: var(--font-display);
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--text-primary);
-            letter-spacing: -0.02em;
-        }
-        .plan-price {
-            font-family: var(--font-display);
-            font-size: 44px;
-            font-weight: 700;
-            background: var(--grad-brand);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: -0.03em;
-            line-height: 1.1;
-            margin-top: 6px;
-        }
-        .plan-price small {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-muted);
-            -webkit-text-fill-color: var(--text-muted);
-        }
-        .plan-period {
-            font-size: 12.5px;
-            color: var(--text-muted);
-            margin-bottom: 26px;
-            font-weight: 600;
-        }
-        .plan-list {
-            text-align: left;
-            list-style: none;
-            margin-bottom: 28px;
-        }
-        .plan-list li {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 8px 0;
-            font-size: 13.5px;
-            color: var(--text-secondary);
-            line-height: 1.5;
-        }
-        .plan-list .check {
-            color: var(--accent);
-            font-weight: 800;
-            font-size: 14px;
-            flex-shrink: 0;
-            width: 16px;
-            text-align: center;
-        }
-        .plan-list .cross {
-            color: var(--text-muted);
-            font-weight: 800;
-            font-size: 14px;
-            opacity: 0.35;
-            flex-shrink: 0;
-            width: 16px;
-            text-align: center;
-        }
-        .plan-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 15px 32px;
-            border-radius: 50px;
-            font-family: var(--font-display);
-            font-weight: 700;
-            font-size: 14.5px;
-            border: none;
-            cursor: pointer;
-            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-            background: var(--grad-brand);
-            color: #fff;
-            box-shadow: 0 10px 30px rgba(26, 92, 255, 0.3);
-            width: 100%;
-            letter-spacing: 0.02em;
-            position: relative;
-            overflow: hidden;
-        }
-        .plan-btn::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(120deg, transparent 30%, rgba(255, 255, 255, 0.3) 50%, transparent 70%);
-            transform: translateX(-100%);
-            transition: transform 0.7s;
-        }
-        .plan-btn:hover::before { transform: translateX(100%); }
-        .plan-btn:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 16px 45px rgba(26, 92, 255, 0.5);
-        }
-        .plan-btn.outline {
-            background: var(--bg-card);
-            color: var(--text-primary);
-            border: 1px solid var(--border-strong);
-            box-shadow: var(--shadow-xs);
-        }
-        .plan-btn.outline:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-            box-shadow: var(--shadow-md), 0 0 30px rgba(26, 92, 255, 0.2);
-        }
-        .plan-note {
-            font-size: 11.5px;
-            color: var(--text-muted);
-            margin-top: 10px;
-            font-weight: 500;
-        }
-        .plans-footnote {
-            text-align: center;
-            margin: 30px auto 0;
-            color: var(--text-secondary);
-            font-size: 14px;
-        }
-
-        /* ============================================================
-           CHANGELOG
-           ============================================================ */
-        .changelog-list {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .changelog-item {
-            display: flex;
-            gap: 24px;
-            padding: 22px 28px;
-            background: var(--bg-card);
-            backdrop-filter: blur(16px);
-            border-radius: var(--radius);
-            margin-bottom: 12px;
-            border: 1px solid var(--border-strong);
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            align-items: flex-start;
-            box-shadow: var(--shadow-xs);
-            position: relative;
-            overflow: hidden;
-        }
-        .changelog-item::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 3px;
-            background: var(--grad-brand);
-            transform: scaleY(0);
-            transform-origin: top;
-            transition: transform 0.4s;
-        }
-        .changelog-item:hover::before { transform: scaleY(1); }
-        .changelog-item:hover {
-            transform: translateX(6px);
-            border-color: var(--accent);
-            box-shadow: var(--shadow-md), 0 0 30px rgba(26, 92, 255, 0.15);
-        }
-        .changelog-item.latest {
-            border-color: var(--accent);
-            background: linear-gradient(90deg, rgba(26, 92, 255, 0.06), var(--bg-card) 60%);
-        }
-        .changelog-item.latest::before { transform: scaleY(1); }
-        .changelog-version {
-            font-family: var(--font-display);
-            font-weight: 700;
-            font-size: 19px;
-            background: var(--grad-brand);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            min-width: 78px;
-            letter-spacing: -0.02em;
-        }
-        .changelog-date {
-            font-size: 12.5px;
-            color: var(--text-muted);
-            min-width: 96px;
-            font-weight: 500;
-            padding-top: 4px;
-        }
-        .changelog-desc {
-            font-size: 14px;
-            color: var(--text-secondary);
-            line-height: 1.7;
-            flex: 1;
-        }
-        .changelog-desc strong {
-            color: var(--text-primary);
-            font-family: var(--font-display);
-            font-weight: 700;
-        }
-        .changelog-desc ul {
-            list-style: none;
-            margin-top: 6px;
-        }
-        .changelog-desc ul li {
-            padding: 3px 0 3px 20px;
-            position: relative;
-        }
-        .changelog-desc ul li::before {
-            content: '▸';
-            position: absolute;
-            left: 0;
-            color: var(--accent);
-            font-weight: 800;
-        }
-        .new-ribbon {
-            display: inline-block;
-            background: var(--grad-brand);
-            color: #fff;
-            font-size: 9px;
-            font-weight: 800;
-            padding: 3px 10px;
-            border-radius: 30px;
-            letter-spacing: 0.1em;
-            margin-left: 8px;
-            box-shadow: 0 4px 12px rgba(26, 92, 255, 0.35);
-            vertical-align: middle;
-        }
-
-        /* ============================================================
-           TESTIMONIOS
-           ============================================================ */
-        .testimonials-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 24px;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        .testimonial-card {
-            background: var(--bg-card);
-            backdrop-filter: blur(16px);
-            padding: 30px 26px;
-            border-radius: var(--radius);
-            border: 1px solid var(--border-strong);
-            box-shadow: var(--shadow-xs);
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            text-align: center;
-            position: relative;
-        }
-        .testimonial-card::before {
-            content: '"';
-            position: absolute;
-            top: 4px;
-            left: 20px;
-            font-family: Georgia, serif;
-            font-size: 56px;
-            line-height: 1;
-            color: var(--accent);
-            opacity: 0.15;
-        }
-        .testimonial-card:hover {
-            transform: translateY(-6px);
-            border-color: var(--accent);
-            box-shadow: var(--shadow-lg), 0 0 30px rgba(26, 92, 255, 0.15);
-        }
-        .testimonial-quote {
-            font-size: 14.5px;
-            font-style: italic;
-            color: var(--text-primary);
-            margin-bottom: 14px;
-            line-height: 1.75;
-            position: relative;
-            z-index: 1;
-            padding-top: 12px;
-        }
-        .testimonial-author {
-            font-family: var(--font-display);
-            font-weight: 700;
-            background: var(--grad-brand);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: 15px;
-        }
-        .testimonial-role {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-top: 2px;
-        }
-
-        /* ============================================================
-           FAQ
-           ============================================================ */
-        .faq-list {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .faq-item {
-            background: var(--bg-card);
-            backdrop-filter: blur(16px);
-            border-radius: var(--radius);
-            margin-bottom: 12px;
-            border: 1px solid var(--border-strong);
-            overflow: hidden;
-            transition: all 0.3s;
-            box-shadow: var(--shadow-xs);
-        }
-        .faq-item:hover {
-            border-color: var(--accent);
-            box-shadow: var(--shadow-md), 0 0 24px rgba(26, 92, 255, 0.12);
-        }
-        .faq-item[open] {
-            border-color: var(--accent);
-            box-shadow: var(--shadow-md);
-        }
-        .faq-item summary {
-            list-style: none;
-            cursor: pointer;
-            padding: 20px 24px;
-            font-family: var(--font-display);
-            font-weight: 600;
-            font-size: 15px;
-            color: var(--text-primary);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 16px;
-            transition: color 0.3s;
-        }
-        .faq-item summary::-webkit-details-marker { display: none; }
-        .faq-item summary::after {
-            content: '+';
-            font-size: 22px;
-            font-weight: 300;
-            color: var(--accent);
-            transition: transform 0.35s;
-            flex-shrink: 0;
-            line-height: 1;
-        }
-        .faq-item[open] summary::after { transform: rotate(135deg); }
-        .faq-item summary:hover { color: var(--accent); }
-        .faq-answer {
-            padding: 0 24px 20px;
-            font-size: 14px;
-            color: var(--text-secondary);
-            line-height: 1.75;
-            border-top: 1px solid var(--border);
-            padding-top: 16px;
-        }
-
-        /* ============================================================
-           CTA
-           ============================================================ */
-        .cta-section {
-            padding: 100px 0;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        .cta-section::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(ellipse at center, rgba(26, 92, 255, 0.1), transparent 70%);
-            pointer-events: none;
-        }
-        .cta-section h2 {
-            font-family: var(--font-display);
-            font-size: 46px;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 18px;
-            letter-spacing: -0.03em;
-            line-height: 1.1;
-        }
-        .cta-section h2 .grad {
-            background: var(--grad-brand);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .cta-section p {
-            font-size: 16.5px;
-            color: var(--text-secondary);
-            max-width: 560px;
-            margin: 0 auto 36px;
-            line-height: 1.7;
-        }
-        .cta-actions {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-        }
-        .cta-actions .primary-group {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 14px;
-        }
-        .cta-actions .fallback-link {
-            font-size: 13px;
-            color: var(--text-muted);
-            transition: color 0.3s;
-        }
-        .cta-actions .fallback-link:hover { color: var(--accent); }
-        .version-info {
-            margin-top: 22px;
-            font-size: 12.5px;
-            color: var(--text-muted);
-            font-weight: 500;
-            letter-spacing: 0.03em;
-        }
-
-        /* ============================================================
-           FOOTER
-           ============================================================ */
-        footer {
-            background: var(--bg-card);
-            backdrop-filter: blur(16px);
-            color: var(--text-muted);
-            padding: 44px 0;
-            text-align: center;
-            border-top: 1px solid var(--border);
-            position: relative;
-            z-index: 2;
-        }
-        footer strong {
-            font-family: var(--font-display);
-            font-weight: 700;
-            background: var(--grad-brand);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .footer-links {
-            margin-top: 14px;
-            display: flex;
-            justify-content: center;
-            gap: 22px;
-            flex-wrap: wrap;
-        }
-        .footer-links a {
-            color: var(--text-muted);
-            transition: color 0.3s;
-            font-size: 0.85rem;
-            font-weight: 500;
-        }
-        .footer-links a:hover { color: var(--accent); }
-
-        /* ============================================================
-           MODAL
-           ============================================================ */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(10, 26, 51, 0.55);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            z-index: 2000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        .modal-overlay.active { display: flex; }
-        .modal {
-            background: var(--bg-card-solid);
-            max-width: 440px;
-            width: 100%;
-            border-radius: var(--radius-xl);
-            padding: 30px 30px 22px;
-            box-shadow: var(--shadow-lg), 0 0 60px rgba(26, 92, 255, 0.2);
-            animation: modalIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            border: 1px solid var(--border-strong);
-            max-height: 90vh;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            overflow: hidden;
-        }
-        .modal::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: var(--grad-brand);
-        }
-        @keyframes modalIn {
-            from { opacity: 0; transform: scale(0.9) translateY(20px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
-        }
-        .modal-scroll {
-            overflow-y: auto;
-            flex: 1;
-            padding-right: 4px;
-        }
-        .modal-scroll::-webkit-scrollbar { width: 5px; }
-        .modal-scroll::-webkit-scrollbar-thumb {
-            background: var(--accent);
-            border-radius: 5px;
-        }
-        .modal-icon {
-            font-size: 42px;
-            text-align: center;
-            margin-bottom: 10px;
-        }
-        .modal h3 {
-            font-family: var(--font-display);
-            font-size: 20px;
-            font-weight: 700;
-            text-align: center;
-            color: var(--text-primary);
-            margin-bottom: 12px;
-            letter-spacing: -0.02em;
-        }
-        .modal p {
-            font-size: 14px;
-            color: var(--text-secondary);
-            text-align: center;
-            line-height: 1.65;
-            margin-bottom: 14px;
-        }
-        .modal-highlight {
-            background: var(--accent-soft);
-            padding: 13px 15px;
-            border-radius: var(--radius-sm);
-            border-left: 4px solid var(--accent);
-            margin: 12px 0;
-            font-size: 13px;
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-        .modal-highlight strong { color: var(--text-primary); }
-        .modal-note {
-            background: rgba(245, 158, 11, 0.08);
-            padding: 12px 14px;
-            border-radius: var(--radius-sm);
-            border: 1px solid rgba(245, 158, 11, 0.25);
-            margin-bottom: 16px;
-            font-size: 13px;
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-        .modal-note strong { color: var(--text-primary); }
-        .modal-actions {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin-top: 8px;
-            flex-shrink: 0;
-            padding-top: 14px;
-            border-top: 1px solid var(--border);
-        }
-        .modal-btn {
-            flex: 1;
-            padding: 12px 16px;
-            border-radius: 50px;
-            font-family: var(--font-display);
-            font-weight: 700;
-            font-size: 13.5px;
-            border: 1px solid var(--border-strong);
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            text-align: center;
-            background: var(--bg-card);
-            color: var(--text-primary);
-            min-height: 44px;
-        }
-        .modal-btn.cancel:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-            transform: translateY(-2px);
-        }
-        .modal-btn.confirm {
-            background: var(--grad-brand);
-            color: #fff;
-            border-color: transparent;
-            box-shadow: 0 8px 24px rgba(26, 92, 255, 0.35);
-        }
-        .modal-btn.confirm:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 36px rgba(26, 92, 255, 0.5);
-        }
-
-        /* ============================================================
-           TOAST
-           ============================================================ */
-        .toast {
-            position: fixed;
-            bottom: 92px;
-            right: 28px;
-            z-index: 3000;
-            background: var(--bg-card-solid);
-            border: 1px solid var(--border-strong);
-            border-left: 4px solid var(--accent);
-            border-radius: var(--radius-sm);
-            padding: 14px 20px;
-            box-shadow: var(--shadow-lg), 0 0 40px rgba(26, 92, 255, 0.2);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            transform: translateX(150%);
-            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-            max-width: 340px;
-        }
-        .toast.show { transform: translateX(0); }
-        .toast-icon { font-size: 22px; flex-shrink: 0; }
-        .toast-text {
-            font-size: 13px;
-            color: var(--text-primary);
-            line-height: 1.4;
-            font-weight: 500;
-        }
-        .toast-text strong {
-            display: block;
-            font-family: var(--font-display);
-            font-size: 12px;
-            color: var(--accent);
-            font-weight: 800;
-            margin-bottom: 2px;
-            letter-spacing: 0.02em;
-        }
-
-        /* ============================================================
-           RESPONSIVE — Colores idénticos en móvil y PC
-           ============================================================ */
-
-        /* Tablet grande */
-        @media (max-width: 1100px) {
-            .hero h1 { font-size: 48px; }
-            .hero-grid { gap: 40px; }
-            .store-grid { grid-template-columns: repeat(3, 1fr); }
-            .features-grid { grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
-        }
-
-        /* Tablet */
-        @media (max-width: 960px) {
-            section { padding: 70px 0; }
-
-            .hero { padding: 120px 0 60px; min-height: auto; }
-            .hero-grid {
-                grid-template-columns: 1fr;
-                gap: 46px;
-                text-align: center;
-            }
-            .hero-content { max-width: 640px; margin: 0 auto; }
-            .hero h1 { font-size: 42px; }
-            .hero p { margin: 0 auto 30px; }
-            .hero-actions { align-items: center; }
-            .hero-actions .primary-group { justify-content: center; width: 100%; }
-            .hero-showcase { max-width: 640px; margin: 0 auto; width: 100%; }
-
-            .store-showcase-grid {
-                grid-template-columns: 1fr;
-                gap: 46px;
-                text-align: center;
-            }
-            .store-copy { max-width: 620px; margin: 0 auto; }
-            .store-copy > p { margin-left: auto; margin-right: auto; }
-            .store-copy h2 { font-size: 38px; }
-            .store-features-list li { text-align: left; }
-            .store-cta-row { justify-content: center; }
-
-            .plans-grid { grid-template-columns: 1fr; max-width: 460px; }
-            .downloads-grid { grid-template-columns: 1fr; max-width: 460px; }
-            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
-            .section-title { font-size: 34px; }
-
-            nav {
-                display: none;
-                flex-direction: column;
-                align-items: stretch;
-                gap: 6px;
-                background: var(--bg-card-solid);
-                backdrop-filter: blur(30px);
-                position: absolute;
-                top: 68px;
-                left: 16px;
-                right: 16px;
-                padding: 18px;
-                box-shadow: var(--shadow-lg);
-                border-radius: var(--radius);
-                border: 1px solid var(--border-strong);
-                z-index: 999;
-            }
-            nav.open { display: flex; }
-            nav > a, nav > button {
-                padding: 12px 16px !important;
-                justify-content: center !important;
-                text-align: center !important;
-                border-radius: 12px !important;
-                font-size: 14px !important;
-            }
-            nav > a.store-link::before { display: none; }
-            nav > a.store-link { padding-left: 16px !important; }
-            .menu-toggle { display: block; }
-
-            .changelog-item { flex-wrap: wrap; gap: 8px; padding: 18px; }
-            .changelog-version, .changelog-date { min-width: auto; }
-
-            .theme-toggle { bottom: 18px; right: 18px; width: 46px; height: 46px; font-size: 20px; }
-            .modal-actions { flex-direction: column; }
-            .toast { right: 16px; left: 16px; max-width: none; bottom: 78px; }
-        }
-
-        /* Móvil */
-        @media (max-width: 600px) {
-            .container { padding: 0 18px; }
-            section { padding: 60px 0; }
-
-            .hero { padding: 105px 0 50px; }
-            .hero h1 { font-size: 32px; letter-spacing: -0.03em; }
-            .hero p { font-size: 15px; padding: 0 4px; }
-            .hero-badge { font-size: 11px; padding: 5px 5px 5px 12px; flex-wrap: wrap; justify-content: center; gap: 6px; }
-            .hero-badge .whats-new { font-size: 10px; padding: 4px 10px; }
-
-            .btn-primary, .btn-secondary {
-                font-size: 13.5px;
-                padding: 14px 22px;
-                width: 100%;
-                justify-content: center;
-            }
-            .hero-actions .primary-group { flex-direction: column; width: 100%; }
-            .hero-actions .fallback-link { font-size: 12px; text-align: center; justify-content: center; }
-
-            .section-title { font-size: 26px; }
-            .section-subtitle { font-size: 15px; margin-bottom: 40px; }
-
-            .stats-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
-            .stat-card { padding: 20px 12px; }
-            .stat-value { font-size: 28px; }
-            .stat-label { font-size: 11.5px; }
-
-            .store-copy h2 { font-size: 26px; }
-            .store-copy > p { font-size: 14.5px; }
-            .store-features-list li { font-size: 13.5px; padding: 9px 0; gap: 12px; }
-            .store-features-list li .bullet { width: 22px; height: 22px; font-size: 11px; }
-
-            /* Mockup de la tienda en móvil */
-            .store-window { padding: 10px; border-radius: 20px; transform: none !important; }
-            .store-window:hover { transform: translateY(-4px) !important; }
-            .store-view { padding: 14px 12px; border-radius: 14px; }
-            .chrome-url { font-size: 10px; padding: 5px 8px; }
-            .chrome-live { font-size: 9px; padding: 3px 7px; }
-            .chrome-live span { display: none; }
-            .store-name-mock { font-size: 12px; }
-            .store-logo-mark { width: 26px; height: 26px; font-size: 13px; }
-            .store-verified { font-size: 8px; padding: 3px 8px; }
-            .store-search { font-size: 10px; padding: 7px 12px; }
-            .store-search .shortcut { display: none; }
-            .store-chips span { font-size: 9px; padding: 4px 10px; }
-            .store-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
-            .store-item { padding: 10px 8px; border-radius: 12px; }
-            .store-thumb { height: 42px; font-size: 22px; margin-bottom: 6px; }
-            .store-item-name { font-size: 9px; }
-            .store-item-price { font-size: 11px; }
-            .store-item-stock { font-size: 8px; }
-            .store-footer-mock { font-size: 9px; margin-top: 12px; padding-top: 10px; }
-            .store-footer-mock .cart { font-size: 9px; padding: 5px 12px; }
-
-            .download-card { padding: 30px 22px 26px; }
-            .download-icon { width: 64px; height: 64px; font-size: 30px; }
-
-            .feature-card { padding: 24px 20px; }
-            .plan-card { padding: 32px 22px; }
-            .plan-price { font-size: 38px; }
-            .plan-btn { font-size: 13.5px; padding: 14px 24px; }
-
-            .cta-section { padding: 70px 0; }
-            .cta-section h2 { font-size: 28px; }
-            .cta-section p { font-size: 14.5px; }
-            .cta-actions .primary-group { flex-direction: column; width: 100%; }
-
-            .marquee-item { font-size: 13px; }
-            .marquee-item .emoji { font-size: 17px; }
-            .marquee-group { gap: 34px; padding-right: 34px; }
-
-            .faq-item summary { font-size: 14px; padding: 16px 18px; }
-            .faq-answer { padding: 0 18px 16px; font-size: 13.5px; }
-
-            .modal { padding: 24px 20px 16px; max-width: 96%; }
-            .modal-scroll { max-height: 60vh; }
-            .modal-btn { font-size: 13px; }
-
-            footer { padding: 34px 0; }
-            .footer-links { gap: 16px; }
-        }
-
-        /* Móvil muy pequeño */
-        @media (max-width: 380px) {
-            .hero h1 { font-size: 28px; }
-            .section-title { font-size: 24px; }
-            .store-copy h2 { font-size: 24px; }
-            .stat-value { font-size: 24px; }
-            .plan-price { font-size: 34px; }
-            .store-grid { grid-template-columns: 1fr; }
-        }
-
-        /* Desktop grande */
-        @media (min-width: 1400px) {
-            .hero h1 { font-size: 64px; }
-            .section-title { font-size: 48px; }
-            .store-copy h2 { font-size: 50px; }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#071426">
+  <meta name="description" content="Nexora Business — gestiona ventas, inventario, sucursales, reportes inteligentes, tienda en línea y Red Nexora desde Android y Windows.">
+  <meta property="og:title" content="Nexora Business — Lleva tu negocio al siguiente nivel">
+  <meta property="og:description" content="Una plataforma para ventas, inventario, reportes inteligentes, tienda en línea y Red Nexora.">
+  <meta property="og:type" content="website">
+  <title>Nexora Business — Gestión empresarial inteligente</title>
+
+  <style>
+    :root{
+      --navy:#071426;
+      --navy2:#0a1b33;
+      --panel:#0e2340;
+      --panel2:#102b4d;
+      --blue:#2563ff;
+      --blue2:#3b82ff;
+      --cyan:#08c8e8;
+      --purple:#8b5cf6;
+      --green:#10d6a0;
+      --white:#f6f9ff;
+      --muted:#93a8c7;
+      --muted2:#7188aa;
+      --line:rgba(70,139,255,.24);
+      --line2:rgba(70,139,255,.48);
+      --shadow:0 30px 90px rgba(0,0,0,.45);
+      --radius:28px;
+      --max:1220px;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;background:var(--navy)}
+    body{
+      min-height:100vh;
+      overflow-x:hidden;
+      color:var(--white);
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:
+        radial-gradient(circle at 10% 0%,rgba(37,99,255,.20),transparent 32rem),
+        radial-gradient(circle at 90% 13%,rgba(8,200,232,.13),transparent 28rem),
+        radial-gradient(circle at 50% 80%,rgba(139,92,246,.08),transparent 34rem),
+        linear-gradient(180deg,#071426 0%,#061122 55%,#040b17 100%);
+    }
+    body:before{
+      content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.23;
+      background-image:linear-gradient(rgba(89,145,225,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(89,145,225,.08) 1px,transparent 1px);
+      background-size:48px 48px;
+      mask-image:linear-gradient(to bottom,#000 0%,transparent 80%);
+    }
+    a{text-decoration:none;color:inherit}
+    img{max-width:100%}
+    .container{width:min(calc(100% - 40px),var(--max));margin:auto}
+
+    /* NAV */
+    .topbar{
+      position:fixed;left:0;right:0;top:0;z-index:1000;
+      background:rgba(5,14,28,.76);
+      border-bottom:1px solid rgba(104,150,218,.13);
+      backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);
+    }
+    .nav{height:78px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand img{width:46px;height:46px;object-fit:contain;border-radius:13px;filter:drop-shadow(0 10px 25px rgba(37,99,255,.35))}
+    .brand strong{font-size:19px;letter-spacing:-.04em;display:block}
+    .brand span{font-size:9px;letter-spacing:.32em;color:var(--cyan);font-weight:900}
+    .nav-links{display:flex;gap:26px;align-items:center;color:#a8bad4;font-size:13px;font-weight:750}
+    .nav-links a:hover{color:#fff}
+    .nav-download{
+      display:inline-flex;align-items:center;gap:8px;padding:12px 17px;border-radius:13px;
+      border:1px solid rgba(65,130,255,.65);
+      background:linear-gradient(135deg,rgba(37,99,255,.28),rgba(8,200,232,.14));
+      box-shadow:0 0 30px rgba(37,99,255,.10),inset 0 0 20px rgba(37,99,255,.06);
+    }
+    .menu-btn{display:none;width:44px;height:44px;border:1px solid var(--line);border-radius:13px;background:#0d203a;color:white;font-size:22px}
+
+    /* COMMON */
+    section{position:relative}
+    .section{padding:105px 0}
+    .section-head{max-width:760px;margin-bottom:42px}
+    .kicker{
+      display:inline-flex;align-items:center;gap:8px;
+      color:#a9c7ff;background:rgba(18,49,89,.62);border:1px solid var(--line);
+      padding:8px 12px;border-radius:999px;text-transform:uppercase;letter-spacing:.13em;font-size:10px;font-weight:900
+    }
+    .kicker i{width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 15px var(--cyan)}
+    h2{font-size:clamp(34px,5vw,58px);line-height:1.02;letter-spacing:-.055em;margin-top:18px}
+    .lead{color:var(--muted);font-size:17px;line-height:1.75;margin-top:16px}
+    .gradient-text{background:linear-gradient(100deg,#fff 18%,#76a9ff 55%,#12d8e8);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+    /* HERO */
+    .hero{padding:150px 0 82px;overflow:hidden}
+    .hero-grid{display:grid;grid-template-columns:.84fr 1.16fr;gap:55px;align-items:center}
+    .hero h1{font-size:clamp(48px,6.5vw,82px);line-height:.95;letter-spacing:-.07em;margin-top:22px}
+    .hero-copy .lead{max-width:650px;font-size:18px}
+    .hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;
+      padding:0 20px;border-radius:15px;font-weight:850;font-size:14px;border:1px solid transparent;transition:.22s ease;
+    }
+    .btn:hover{transform:translateY(-2px)}
+    .btn-primary{background:linear-gradient(120deg,var(--blue),#1378ff 55%,var(--cyan));box-shadow:0 14px 35px rgba(37,99,255,.30)}
+    .btn-secondary{background:rgba(15,37,65,.76);border-color:var(--line2);color:#d8e6ff}
+    .hero-note{margin-top:15px;color:var(--muted2);font-size:12px}
+
+    /* PHONE / DASHBOARD VISUAL */
+    .visual{position:relative;min-height:600px;display:grid;place-items:center}
+    .orb{position:absolute;border-radius:50%;filter:blur(8px);pointer-events:none}
+    .orb.a{width:300px;height:300px;background:rgba(37,99,255,.18);right:8%;top:8%}
+    .orb.b{width:220px;height:220px;background:rgba(8,200,232,.13);left:5%;bottom:7%}
+    .phone{
+      position:relative;width:min(370px,65%);aspect-ratio:.50;z-index:4;
+      padding:9px;border-radius:42px;background:linear-gradient(145deg,#0b172b,#162b49);
+      border:1px solid rgba(127,179,255,.5);box-shadow:0 45px 100px rgba(0,0,0,.55),0 0 65px rgba(37,99,255,.22);
+      transform:rotate(-5deg);
+    }
+    .phone:after{content:"";position:absolute;inset:-2px;border-radius:44px;box-shadow:0 0 35px rgba(8,200,232,.16);pointer-events:none}
+    .phone-screen{height:100%;border-radius:34px;overflow:hidden;background:#08172d;padding:18px 15px}
+    .phone-top{display:flex;align-items:center;justify-content:space-between;color:#9db0ce;font-size:9px;margin-bottom:14px}
+    .phone-brand{display:flex;align-items:center;gap:8px}
+    .phone-brand img{width:30px;height:30px;border-radius:8px}
+    .phone-brand b{font-size:13px;color:#f4f8ff}
+    .welcome{color:#90a7c8;font-size:10px}
+    .welcome strong{display:block;color:#fff;font-size:19px;margin-top:3px}
+    .mini-chart{height:120px;margin-top:15px;padding:14px;border-radius:20px;background:linear-gradient(145deg,#102b4d,#0d2039);border:1px solid rgba(66,127,234,.25)}
+    .mini-chart-head{display:flex;justify-content:space-between;font-size:9px;color:#9db2d2}
+    .mini-chart strong{font-size:22px;color:white}
+    .bars{height:65px;display:flex;align-items:end;gap:7px;margin-top:7px}
+    .bar{flex:1;border-radius:7px 7px 3px 3px;background:linear-gradient(to top,var(--blue),var(--cyan));box-shadow:0 0 12px rgba(8,200,232,.16)}
+    .bar:nth-child(1){height:26%}.bar:nth-child(2){height:39%}.bar:nth-child(3){height:34%}.bar:nth-child(4){height:52%}.bar:nth-child(5){height:48%}.bar:nth-child(6){height:75%}.bar:nth-child(7){height:100%}
+    .phone-cards{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px}
+    .phone-card{padding:13px;border-radius:17px;background:#102640;border:1px solid rgba(76,133,223,.23)}
+    .phone-card small{display:block;color:#7890b2;font-size:8px}.phone-card b{display:block;margin-top:5px;font-size:17px}.green{color:var(--green)!important}
+    .store-card{margin-top:10px;padding:14px;border-radius:18px;background:linear-gradient(135deg,rgba(139,92,246,.30),rgba(8,200,232,.13));border:1px solid rgba(139,92,246,.42)}
+    .store-card strong{font-size:13px}.store-card p{color:#aabbd4;font-size:8px;margin-top:4px}
+    .floating-card{position:absolute;z-index:5;border:1px solid rgba(85,148,255,.35);background:rgba(11,31,54,.88);backdrop-filter:blur(14px);box-shadow:var(--shadow);border-radius:18px}
+    .stat-float{left:1%;top:13%;padding:14px 17px;width:180px}
+    .stat-float small,.product-float small{color:#8299bb;font-size:9px}.stat-float b{font-size:23px;display:block;margin-top:4px}.stat-float span{font-size:9px;color:var(--green)}
+    .product-float{right:0;bottom:12%;padding:13px;width:205px}
+    .product-row{display:flex;gap:11px;align-items:center}.product-img{width:55px;height:55px;border-radius:12px;background:linear-gradient(145deg,#e8edf5,#aebbd0);position:relative}
+    .product-img:before{content:"";position:absolute;left:12px;right:12px;top:18px;height:22px;border-radius:4px;background:#18263c}
+    .product-float b{font-size:13px}.product-float strong{display:block;margin-top:3px;color:#fff;font-size:15px}
+    .map-float{left:-2%;bottom:2%;width:235px;height:140px;padding:0;overflow:hidden}
+    .map-float .map-mini{height:100%;background:
+      linear-gradient(35deg,transparent 43%,rgba(255,255,255,.15) 44%,rgba(255,255,255,.15) 47%,transparent 48%),
+      linear-gradient(155deg,transparent 35%,rgba(255,255,255,.10) 36%,rgba(255,255,255,.10) 39%,transparent 40%),
+      repeating-linear-gradient(90deg,transparent 0 28px,rgba(255,255,255,.08) 29px 31px),
+      repeating-linear-gradient(0deg,transparent 0 26px,rgba(255,255,255,.07) 27px 29px),#163052}
+    .pin{position:absolute;left:48%;top:46%;width:25px;height:25px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:linear-gradient(135deg,var(--blue),var(--cyan));box-shadow:0 0 25px rgba(8,200,232,.6)}
+    .pin:after{content:"";position:absolute;width:8px;height:8px;border-radius:50%;background:white;left:8px;top:8px}
+
+    /* DOWNLOADS */
+    .downloads{padding:92px 0 105px}
+    .download-shell{
+      position:relative;overflow:hidden;border:1px solid var(--line2);border-radius:34px;
+      background:
+        radial-gradient(circle at 90% 10%,rgba(8,200,232,.13),transparent 25rem),
+        radial-gradient(circle at 10% 100%,rgba(37,99,255,.15),transparent 28rem),
+        linear-gradient(145deg,#0b1d35,#0a1830);
+      box-shadow:var(--shadow);padding:48px;
+    }
+    .download-shell:before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(120deg,transparent 0 45%,rgba(255,255,255,.025) 50%,transparent 55%)}
+    .download-head{display:flex;justify-content:space-between;gap:30px;align-items:end;margin-bottom:30px}
+    .download-head h2{max-width:650px}
+    .download-head p{max-width:430px;color:var(--muted);line-height:1.65}
+    .platforms{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .download-card{
+      position:relative;min-height:285px;padding:28px;border-radius:25px;
+      background:linear-gradient(145deg,rgba(18,46,79,.92),rgba(10,29,52,.96));
+      border:1px solid rgba(75,139,245,.30);overflow:hidden;transition:.25s ease;
+    }
+    .download-card:hover{transform:translateY(-4px);border-color:rgba(75,151,255,.62);box-shadow:0 20px 60px rgba(0,0,0,.25)}
+    .download-card.android{background:radial-gradient(circle at 90% 10%,rgba(16,214,160,.12),transparent 16rem),linear-gradient(145deg,#102d42,#0b2037)}
+    .download-card.windows{background:radial-gradient(circle at 90% 10%,rgba(8,200,232,.13),transparent 16rem),linear-gradient(145deg,#102b4c,#0b1e38)}
+    .platform-top{display:flex;align-items:center;gap:15px}
+    .platform-icon{width:58px;height:58px;display:grid;place-items:center;border-radius:17px;font-size:30px;background:linear-gradient(135deg,var(--blue),var(--cyan));box-shadow:0 12px 30px rgba(37,99,255,.25)}
+    .android .platform-icon{background:linear-gradient(135deg,#10b981,#06c7e8)}
+    .platform-top h3{font-size:23px;letter-spacing:-.035em}.platform-top p{color:var(--muted);font-size:12px;margin-top:3px}
+    .download-card .description{color:#9cb0cd;line-height:1.6;font-size:13px;margin:20px 0}
+    .file-list{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+    .file-pill{font-size:10px;font-weight:800;padding:7px 9px;border-radius:9px;color:#cfe0ff;background:#0b1a30;border:1px solid rgba(82,137,226,.23)}
+    .download-main{
+      display:flex;align-items:center;justify-content:space-between;gap:15px;padding-top:17px;border-top:1px solid rgba(95,142,211,.15)
+    }
+    .download-main span{color:#7189ab;font-size:10px}
+    .download-btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 18px;border-radius:14px;
+      font-size:13px;font-weight:900;color:white;background:linear-gradient(110deg,var(--blue),#1c78ff,var(--cyan));
+      box-shadow:0 12px 30px rgba(37,99,255,.25);white-space:nowrap
+    }
+    .android .download-btn{background:linear-gradient(110deg,#0b9d73,#0ac7c0,#1689ff)}
+    .android-alt-download{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:11px;padding-top:12px;border-top:1px solid rgba(95,142,211,.12);font-size:10px;color:#7189ab}
+    .android-alt-download a{color:#83b6ff;font-weight:850}
+    .android-alt-download a:hover{color:#fff}
+    .download-btn:hover{filter:brightness(1.08);transform:translateY(-1px)}
+    .download-help{margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .help-box{padding:16px;border-radius:16px;background:rgba(4,15,29,.36);border:1px solid rgba(84,132,206,.16)}
+    .help-box b{font-size:12px}.help-box p{font-size:11px;line-height:1.55;color:#8097b7;margin-top:5px}
+    .download-warning{
+      margin-top:18px;padding:18px 20px;border-radius:18px;border:1px solid rgba(255,184,77,.28);
+      background:rgba(255,184,77,.06);color:#b8c5d7;font-size:12px;line-height:1.65
+    }
+    .download-warning strong{color:#ffd083}
+    .windows-note{margin-top:18px;color:#8299b8;font-size:11px}
+
+    /* FEATURES */
+    .features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .feature{padding:25px;border-radius:23px;background:linear-gradient(145deg,rgba(16,39,69,.86),rgba(9,25,45,.92));border:1px solid var(--line);min-height:205px}
+    .feature-icon{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;font-size:21px;background:linear-gradient(135deg,rgba(37,99,255,.28),rgba(8,200,232,.17));border:1px solid rgba(66,139,255,.30)}
+    .feature h3{font-size:17px;margin-top:18px}.feature p{color:var(--muted);font-size:12px;line-height:1.65;margin-top:8px}
+
+    /* MAP */
+    .map-section{padding-top:30px}
+    .map-wrap{position:relative;height:520px;border-radius:32px;overflow:hidden;border:1px solid var(--line2);box-shadow:var(--shadow);background:#122b49}
+    .map{
+      position:absolute;inset:0;
+      background:
+        linear-gradient(24deg,transparent 0 42%,rgba(255,255,255,.17) 43% 44%,transparent 45%),
+        linear-gradient(154deg,transparent 0 35%,rgba(255,255,255,.10) 36% 37%,transparent 38%),
+        linear-gradient(72deg,transparent 0 63%,rgba(255,255,255,.12) 64% 65%,transparent 66%),
+        repeating-linear-gradient(90deg,transparent 0 67px,rgba(255,255,255,.075) 68px 70px),
+        repeating-linear-gradient(0deg,transparent 0 61px,rgba(255,255,255,.065) 62px 64px),
+        #183452;
+    }
+    .map:before{content:"";position:absolute;inset:0;background:
+      radial-gradient(circle at 22% 30%,rgba(55,130,88,.34) 0 6%,transparent 6.5%),
+      radial-gradient(circle at 74% 68%,rgba(55,130,88,.28) 0 7%,transparent 7.5%),
+      radial-gradient(circle at 53% 30%,rgba(69,122,80,.25) 0 5%,transparent 5.5%);
+    }
+    .road{position:absolute;height:13px;border-radius:99px;background:#d9a15a;box-shadow:0 0 0 2px rgba(255,255,255,.08)}
+    .r1{width:70%;left:-7%;top:38%;transform:rotate(-10deg)}.r2{width:70%;right:-5%;top:62%;transform:rotate(17deg)}.r3{width:60%;left:21%;top:13%;transform:rotate(80deg);background:#dc7b7b}
+    .water{position:absolute;width:130%;height:85px;left:-10%;top:48%;transform:rotate(-14deg);background:rgba(54,159,206,.27);filter:blur(1px)}
+    .map-label{position:absolute;color:rgba(241,247,255,.67);font-weight:750;font-size:14px}
+    .store-pin{position:absolute;width:54px;height:54px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--blue),var(--cyan));border:4px solid rgba(255,255,255,.82);box-shadow:0 0 0 10px rgba(37,99,255,.12),0 15px 35px rgba(0,0,0,.3);font-size:22px}
+    .store-pin.p1{left:34%;top:36%}.store-pin.p2{left:65%;top:59%}.store-pin.p3{left:52%;top:24%}
+    .map-card{
+      position:absolute;left:26px;bottom:25px;width:min(440px,calc(100% - 52px));padding:22px;border-radius:22px;
+      background:rgba(7,22,40,.91);border:1px solid rgba(83,145,245,.35);backdrop-filter:blur(16px);box-shadow:0 20px 60px rgba(0,0,0,.38)
+    }
+    .map-card .mini{color:#8da5c4;font-size:10px}.map-card h3{font-size:22px;margin-top:4px}.map-card p{color:#8da5c4;font-size:12px;margin-top:5px}
+    .map-badges{display:flex;gap:7px;flex-wrap:wrap;margin-top:14px}.map-badges span{padding:7px 9px;border-radius:9px;background:#0c2742;color:#bcd2f1;font-size:10px}
+
+    /* ONLINE / NETWORK */
+    .split{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .big-card{padding:34px;border-radius:30px;min-height:340px;border:1px solid var(--line);overflow:hidden;position:relative}
+    .big-card.store{background:radial-gradient(circle at 90% 10%,rgba(139,92,246,.25),transparent 20rem),linear-gradient(145deg,#182448,#0b1931)}
+    .big-card.network{background:radial-gradient(circle at 90% 10%,rgba(8,200,232,.22),transparent 20rem),linear-gradient(145deg,#0d2d42,#0a1930)}
+    .big-card h3{font-size:27px;margin-top:18px}.big-card p{color:#99aecb;line-height:1.65;font-size:13px;max-width:470px;margin-top:9px}
+    .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}.chips span{padding:9px 11px;border-radius:10px;background:rgba(5,17,32,.48);border:1px solid rgba(108,144,207,.17);font-size:10px;color:#c2d3eb}
+    .store-visual{position:absolute;right:22px;bottom:22px;width:160px;height:115px;border-radius:20px;background:linear-gradient(145deg,#7c4de4,#0cb7dc);transform:rotate(-4deg);box-shadow:0 22px 50px rgba(0,0,0,.35)}
+    .store-visual:after{content:"TIENDA";position:absolute;inset:16px;border:1px solid rgba(255,255,255,.28);border-radius:13px;display:grid;place-items:center;font-weight:900;font-size:14px}
+    .network-visual{position:absolute;right:25px;bottom:20px;width:180px;height:120px}
+    .network-visual i{position:absolute;width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--cyan));box-shadow:0 0 20px rgba(8,200,232,.4)}
+    .network-visual i:nth-child(1){left:72px;top:46px}.network-visual i:nth-child(2){left:18px;top:12px}.network-visual i:nth-child(3){right:15px;top:20px}.network-visual i:nth-child(4){left:35px;bottom:12px}.network-visual i:nth-child(5){right:30px;bottom:4px}
+    .network-visual:before,.network-visual:after{content:"";position:absolute;height:2px;background:linear-gradient(90deg,var(--blue),var(--cyan));transform-origin:left center;opacity:.6}
+    .network-visual:before{width:90px;left:82px;top:53px;transform:rotate(-27deg)}.network-visual:after{width:100px;left:80px;top:55px;transform:rotate(28deg)}
+
+    /* FAQ */
+    .faq{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    details{padding:20px 22px;border:1px solid var(--line);border-radius:18px;background:rgba(12,31,54,.72)}
+    summary{cursor:pointer;list-style:none;font-weight:800;font-size:14px}summary::-webkit-details-marker{display:none}
+    details p{color:var(--muted);font-size:12px;line-height:1.7;padding-top:11px}
+
+    /* FOOTER */
+    footer{padding:50px 0 35px;border-top:1px solid rgba(95,140,210,.13);background:rgba(3,10,20,.55)}
+    .footer-grid{display:flex;justify-content:space-between;gap:30px;align-items:start}
+    .footer-brand{display:flex;gap:12px;align-items:center}.footer-brand img{width:42px;height:42px;border-radius:11px}.footer-brand b{display:block}.footer-brand span{font-size:10px;color:#7e95b6}
+    .footer-links{display:flex;gap:20px;color:#8ea3c2;font-size:11px}.copyright{color:#5f7596;font-size:10px;margin-top:28px}
+
+    @media(max-width:980px){
+      .nav-links{display:none}.menu-btn{display:block}
+      .hero-grid{grid-template-columns:1fr}.hero-copy{text-align:center}.hero-copy .lead{margin-inline:auto}.hero-actions{justify-content:center}.hero-note{text-align:center}
+      .visual{min-height:570px}.phone{width:310px}
+      .features-grid{grid-template-columns:1fr 1fr}
+      .platforms,.split{grid-template-columns:1fr}.download-head{display:block}.download-head p{margin-top:12px}
+    }
+    @media(max-width:650px){
+      .container{width:min(calc(100% - 24px),var(--max))}
+      .nav{height:68px}.brand img{width:40px;height:40px}.brand strong{font-size:17px}
+      .hero{padding-top:112px}.hero h1{font-size:clamp(43px,13vw,64px)}
+      .hero-actions .btn{width:100%}
+      .visual{min-height:520px}.phone{width:260px;transform:rotate(-3deg)}
+      .stat-float{left:0;top:11%;width:145px;padding:11px}.stat-float b{font-size:18px}
+      .product-float{right:-2px;bottom:11%;width:170px;padding:10px}.product-img{width:43px;height:43px}.product-float b{font-size:11px}.product-float strong{font-size:13px}
+      .map-float{left:0;bottom:1%;width:175px;height:105px}
+      .section{padding:78px 0}.section-head{margin-bottom:28px}.lead{font-size:15px}
+      .download-shell{padding:22px;border-radius:25px}.download-card{padding:20px;min-height:auto}
+      .platforms{gap:12px}.download-main{align-items:stretch;flex-direction:column}.download-btn{width:100%}
+      .download-help{grid-template-columns:1fr}.download-warning{font-size:11px}
+      .features-grid,.faq{grid-template-columns:1fr}
+      .feature{min-height:0}
+      .map-wrap{height:470px;border-radius:25px}.map-card{left:13px;bottom:13px;width:calc(100% - 26px);padding:17px}.map-card h3{font-size:19px}
+      .store-visual,.network-visual{opacity:.55;right:-20px}
+      .big-card{min-height:320px;padding:24px}
+      .footer-grid{flex-direction:column}.footer-links{flex-wrap:wrap}
+    }
+    @media(prefers-reduced-motion:reduce){
+      html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}
+    }
+  </style>
 </head>
+
 <body>
+<header class="topbar">
+  <div class="container nav">
+    <a class="brand" href="#inicio" aria-label="Nexora Business">
+      <img src="logo.png" alt="Nexora Business">
+      <div class="brand-copy"><strong>Nexora Business</strong><span>GESTIÓN EMPRESARIAL</span></div>
+    </a>
+    <nav class="nav-links" aria-label="Navegación principal">
+      <a href="#funciones">Funciones</a>
+      <a href="#tienda">Tienda & Red</a>
+      <a href="#mapa">Sucursales</a>
+      <a href="#descargas" class="nav-download">Descargar Nexora ↓</a>
+    </nav>
+    <button class="menu-btn" aria-label="Abrir menú" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+  </div>
+</header>
 
-    <!-- ===== EFECTOS DE FONDO ===== -->
-    <canvas id="money-canvas"></canvas>
-    <div class="cursor-glow" id="cursorGlow"></div>
-
-    <!-- ===== HEADER ===== -->
-    <header id="header">
-        <div class="container header-inner">
-            <a href="#" class="logo">
-                <span class="logo-mark">🛍️</span>
-                Tu<span>MiPyme</span>
-            </a>
-            <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">☰</button>
-            <nav id="mainNav">
-                <a href="#tienda" class="store-link">Tienda en línea</a>
-                <a href="#downloads">Descargas</a>
-                <a href="#features">Funciones</a>
-                <a href="#plans">Planes</a>
-                <a href="#changelog">Novedades</a>
-                <a href="#faq">FAQ</a>
-                <button class="nav-btn android download-trigger" data-platform="android64">📱 Android</button>
-                <button class="nav-btn windows download-trigger" data-platform="windows">💻 Windows</button>
-                <a href="https://leifdev0306.github.io/Portafolio/" target="_blank" class="nav-portfolio">Portafolio</a>
-            </nav>
+<main id="inicio">
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <div class="kicker"><i></i> Una nueva forma de gestionar tu negocio</div>
+        <h1>Tu negocio.<br><span class="gradient-text">Más inteligente.</span></h1>
+        <p class="lead">Nexora Business reúne ventas, inventario, sucursales, reportes inteligentes, tienda en línea y una nueva red de negocios en una sola experiencia.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#descargas">⬇ Descargar Nexora</a>
+          <a class="btn btn-secondary" href="#funciones">Conocer la plataforma →</a>
         </div>
-    </header>
+        <p class="hero-note">Disponible para <strong>Android</strong> y <strong>Windows</strong>.</p>
+      </div>
 
-    <!-- ===== HERO ===== -->
-    <section class="hero" id="home">
-        <div class="container hero-grid">
-            <div class="hero-content">
-                <div class="hero-badge">
-                    <span class="version">v2.4.0</span>
-                    <span class="new-pill">✦ NUEVO</span>
-                    <a href="#changelog" class="whats-new">Tienda en línea →</a>
-                </div>
-                <h1>Gestión inteligente y <span class="highlight">tienda en línea</span></h1>
-                <p>Administra ventas, inventario, gastos, clientes y sucursales desde un solo lugar. Además, crea tu <strong>tienda en línea</strong> para que tus clientes compren desde donde estén. Funciona en <strong>Android</strong> y <strong>Windows</strong>, incluso sin internet.</p>
-                <div class="hero-actions">
-                    <div class="primary-group">
-                        <button class="btn-primary btn-android download-trigger" data-platform="android64">
-                            📱 Descargar Android
-                        </button>
-                        <button class="btn-primary btn-windows download-trigger" data-platform="windows">
-                            💻 Descargar Windows
-                        </button>
-                        <a href="#tienda" class="btn-secondary">Ver tienda →</a>
-                    </div>
-                    <a href="#" class="fallback-link download-trigger" data-platform="android32">
-                        <span>🔄</span> Si tu móvil es antiguo o la app no instala, usa la versión de 32 bits
-                    </a>
-                </div>
-            </div>
-            <div class="hero-showcase">
-                <div class="showcase-glow"></div>
-                <div class="store-window">
-                    <div class="window-chrome">
-                        <div class="chrome-dots">
-                            <span class="chrome-dot r"></span>
-                            <span class="chrome-dot y"></span>
-                            <span class="chrome-dot g"></span>
-                        </div>
-                        <div class="chrome-url">tu-mipyme.app/mi-tienda</div>
-                        <div class="chrome-live"><span>EN VIVO</span></div>
-                    </div>
-                    <div class="store-view">
-                        <div class="store-top">
-                            <div class="store-brand">
-                                <div class="store-logo-mark">🛍️</div>
-                                <div class="store-name-mock">
-                                    Mi Tienda
-                                    <small>tu-mipyme.app</small>
-                                </div>
-                            </div>
-                            <div class="store-verified">✓ PREMIUM</div>
-                        </div>
-                        <div class="store-search">
-                            <span>🔍</span>
-                            <span class="placeholder">Buscar en mi tienda…</span>
-                            <span class="shortcut">⌘K</span>
-                        </div>
-                        <div class="store-chips">
-                            <span class="active">Todos</span>
-                            <span>Bebidas</span>
-                            <span>Alimentos</span>
-                            <span>Higiene</span>
-                        </div>
-                        <div class="store-grid">
-                            <div class="store-item">
-                                <div class="store-thumb">🥤</div>
-                                <div class="store-item-name">Refresco 500ml</div>
-                                <div class="store-item-price">$120</div>
-                                <div class="store-item-stock"><span class="dot"></span>24 en stock</div>
-                            </div>
-                            <div class="store-item">
-                                <div class="store-thumb">🍞</div>
-                                <div class="store-item-name">Pan integral</div>
-                                <div class="store-item-price">$80</div>
-                                <div class="store-item-stock"><span class="dot"></span>15 en stock</div>
-                            </div>
-                            <div class="store-item">
-                                <div class="store-thumb">🧴</div>
-                                <div class="store-item-name">Champú 400ml</div>
-                                <div class="store-item-price">$350</div>
-                                <div class="store-item-stock"><span class="dot"></span>8 en stock</div>
-                            </div>
-                            <div class="store-item">
-                                <div class="store-thumb">☕</div>
-                                <div class="store-item-name">Café molido</div>
-                                <div class="store-item-price">$450</div>
-                                <div class="store-item-stock"><span class="dot"></span>12 en stock</div>
-                            </div>
-                            <div class="store-item">
-                                <div class="store-thumb">🍫</div>
-                                <div class="store-item-name">Chocolate</div>
-                                <div class="store-item-price">$95</div>
-                                <div class="store-item-stock"><span class="dot"></span>30 en stock</div>
-                            </div>
-                            <div class="store-item">
-                                <div class="store-thumb">🥛</div>
-                                <div class="store-item-name">Leche 1L</div>
-                                <div class="store-item-price">$200</div>
-                                <div class="store-item-stock"><span class="dot"></span>20 en stock</div>
-                            </div>
-                        </div>
-                        <div class="store-footer-mock">
-                            <span>6 productos · Actualizado ahora</span>
-                            <span class="cart">🛒 Ver carrito</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+      <div class="visual" aria-label="Vista previa de Nexora Business">
+        <div class="orb a"></div><div class="orb b"></div>
 
-    <!-- ===== MARQUEE ===== -->
-    <div class="marquee" aria-hidden="true">
-        <div class="marquee-track">
-            <div class="marquee-group">
-                <span class="marquee-item"><span class="emoji">🛍️</span> Tienda en línea<span class="dot-sep"></span></span>
-                <span class="marquee-item"><span class="emoji">⚡</span> Ventas rápidas<span class="dot-sep"></span></span>
-                <span class="marquee-item"><span class="emoji">📦</span> Inventario completo<span class="dot-sep"></span></span>
-                <span class="marquee-item"><span class="emoji">☁️</span> Modo offline<span class="dot-sep"></span></span>
-                <span class="marquee-item"><span class="emoji">🏪</span> Multi-sucursal<span class="dot-sep"></span></span>
-                <span class="marquee-item"><span class="emoji">👥</span> Vendedores y roles<span class="dot-sep"></span></span>
-                <span class="marquee-item"><span class="emoji">💰</span> Nóminas<span class="dot-sep"></span></span>
-                <span class="marquee-item"><span class="emoji">📊</span> Reportes<span class="dot-sep"></span></span>
-                <span class="marquee-item"><span class="emoji">🧾</span> Facturación<span class="dot-sep"></span></span>
-                <span class="marquee-item"><span class="emoji">💳</span> Deudas y cobros<span class="dot-sep"></span></span>
-                <span class="marquee-item"><span class="emoji">🎯</span> Metas de ventas<span class="dot-sep"></span></span>
-                <span class="marquee-item"><span class="emoji">📏</span> Unidades decimales<span class="dot-sep"></span></span>
-            </div>
-            <div class="marquee-group" aria-hidden="true">
-                <span class="marquee-item"><span class="emoji">🛍️</span> Tienda en línea<span class="dot-sep"></span></span>
-                <span class="marquee-item"><span class="emoji">⚡</span> Ventas rápidas<span class="dot-sep"></span></span>
-                <span class="marquee-item"><span class="emoji">📦</span> Inventario completo<span class="dot-sep"></span></span>
-                <span class="marquee-item"><span class="emoji">☁️</span> Modo offline<span class="dot-sep"></span></span>
-                <span class="marquee-item"><span class="emoji">🏪</span> Multi-sucursal<span class="dot-sep"></span></span>
-                <span class="marquee-item"><span class="emoji">👥</span> Vendedores y roles<span class="dot-sep"></span></span>
-                <span class="marquee-item"><span class="emoji">💰</span> Nóminas<span class="dot-sep"></span></span>
-                <span class="marquee-item"><span class="emoji">📊</span> Reportes<span class="dot-sep"></span></span>
-                <span class="marquee-item"><span class="emoji">🧾</span> Facturación<span class="dot-sep"></span></span>
-                <span class="marquee-item"><span class="emoji">💳</span> Deudas y cobros<span class="dot-sep"></span></span>
-                <span class="marquee-item"><span class="emoji">🎯</span> Metas de ventas<span class="dot-sep"></span></span>
-                <span class="marquee-item"><span class="emoji">📏</span> Unidades decimales<span class="dot-sep"></span></span>
-            </div>
+        <div class="floating-card stat-float">
+          <small>Ventas de hoy</small>
+          <b>$11.8M</b>
+          <span>↗ Crecimiento positivo</span>
         </div>
+
+        <div class="floating-card product-float">
+          <div class="product-row">
+            <div class="product-img"></div>
+            <div><small>Producto destacado</small><b>Acer Nitro V15</b><strong>$980,000</strong></div>
+          </div>
+        </div>
+
+        <div class="floating-card map-float">
+          <div class="map-mini"><div class="pin"></div></div>
+        </div>
+
+        <div class="phone">
+          <div class="phone-screen">
+            <div class="phone-top">
+              <div class="phone-brand"><img src="logo.png" alt=""><b>Nexora</b></div>
+              <span>3:05</span>
+            </div>
+            <div class="welcome">Buenas tardes</div>
+            <div class="welcome"><strong>Tu negocio, bajo control.</strong></div>
+            <div class="mini-chart">
+              <div class="mini-chart-head"><span>Ventas acumuladas</span><strong>$45.1M</strong></div>
+              <div class="bars"><i class="bar"></i><i class="bar"></i><i class="bar"></i><i class="bar"></i><i class="bar"></i><i class="bar"></i><i class="bar"></i></div>
+            </div>
+            <div class="phone-cards">
+              <div class="phone-card"><small>Ventas</small><b class="green">$11.8M</b></div>
+              <div class="phone-card"><small>Operaciones</small><b>9</b></div>
+              <div class="phone-card"><small>Ganancia</small><b class="green">$7.6M</b></div>
+              <div class="phone-card"><small>Gastos</small><b>$0</b></div>
+            </div>
+            <div class="store-card"><strong>✦ Mi Tienda Online</strong><p>Tu catálogo y tu negocio, visibles para más personas.</p></div>
+          </div>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <!-- ===== STATS ===== -->
-    <section class="stats-section">
-        <div class="container">
-            <div class="stats-grid">
-                <div class="stat-card fade-up">
-                    <div class="stat-value" data-count="30" data-suffix="+">0</div>
-                    <div class="stat-label">Funciones integradas</div>
-                </div>
-                <div class="stat-card fade-up">
-                    <div class="stat-value" data-count="3">0</div>
-                    <div class="stat-label">Plataformas disponibles</div>
-                </div>
-                <div class="stat-card fade-up">
-                    <div class="stat-value" data-count="3">0</div>
-                    <div class="stat-label">Días gratis Premium</div>
-                </div>
-                <div class="stat-card fade-up">
-                    <div class="stat-value" data-count="100" data-suffix="%">0</div>
-                    <div class="stat-label">Modo offline</div>
-                </div>
-            </div>
+  <!-- DESCARGAS: botones visibles inmediatamente -->
+  <section class="downloads" id="descargas">
+    <div class="container">
+      <div class="download-shell">
+        <div class="download-head">
+          <div>
+            <div class="kicker"><i></i> Descarga Nexora</div>
+            <h2>Empieza a usar <span class="gradient-text">Nexora Business</span></h2>
+          </div>
+          <p>Elige tu dispositivo y descarga Nexora desde la versión oficial publicada. Solo necesitas escoger la opción que corresponde a tu equipo.</p>
         </div>
-    </section>
 
-    <!-- ===== STORE SHOWCASE ===== -->
-    <section class="store-showcase-section" id="tienda">
-        <div class="container">
-            <div class="store-showcase-grid">
-                <div class="store-copy fade-up">
-                    <div class="section-tag" style="margin-left:0;">✦ Función estrella</div>
-                    <h2>Tu negocio, ahora también <span class="grad">en línea</span></h2>
-                    <p>Publica tus productos y comparte el enlace de tu tienda. Tus clientes verán el catálogo con fotos, precios y stock actualizado, sin instalar nada.</p>
-                    <ul class="store-features-list">
-                        <li><span class="bullet">✓</span><div><strong>Tienda pública</strong> con tu propio enlace para compartir.</div></li>
-                        <li><span class="bullet">✓</span><div><strong>Catálogo con fotos</strong>, precios y stock en tiempo real.</div></li>
-                        <li><span class="bullet">✓</span><div><strong>Publica productos</strong> desde tu inventario con un toque.</div></li>
-                        <li><span class="bullet">✓</span><div><strong>Personaliza</strong> nombre, descripción y contacto.</div></li>
-                        <li><span class="bullet">✓</span><div><strong>Sincronización automática</strong> entre tu app y tu tienda.</div></li>
-                    </ul>
-                    <div class="store-cta-row">
-                        <button class="btn-primary download-trigger" data-platform="android64">
-                            🚀 Crear mi tienda
-                        </button>
-                        <a href="#plans" class="btn-secondary">Ver planes →</a>
-                    </div>
-                </div>
-                <div class="store-preview-big fade-up">
-                    <div class="showcase-glow"></div>
-                    <div class="store-window">
-                        <div class="window-chrome">
-                            <div class="chrome-dots">
-                                <span class="chrome-dot r"></span>
-                                <span class="chrome-dot y"></span>
-                                <span class="chrome-dot g"></span>
-                            </div>
-                            <div class="chrome-url">tu-mipyme.app/mi-tienda/bebidas</div>
-                            <div class="chrome-live"><span>EN VIVO</span></div>
-                        </div>
-                        <div class="store-view">
-                            <div class="store-top">
-                                <div class="store-brand">
-                                    <div class="store-logo-mark">🛍️</div>
-                                    <div class="store-name-mock">
-                                        Mi Tienda
-                                        <small>tu-mipyme.app</small>
-                                    </div>
-                                </div>
-                                <div class="store-verified">✓ PREMIUM</div>
-                            </div>
-                            <div class="store-search">
-                                <span>🔍</span>
-                                <span class="placeholder">Buscar en mi tienda…</span>
-                                <span class="shortcut">⌘K</span>
-                            </div>
-                            <div class="store-chips">
-                                <span>Todos</span>
-                                <span class="active">Bebidas</span>
-                                <span>Alimentos</span>
-                                <span>Higiene</span>
-                            </div>
-                            <div class="store-grid">
-                                <div class="store-item">
-                                    <div class="store-thumb">🥤</div>
-                                    <div class="store-item-name">Refresco 500ml</div>
-                                    <div class="store-item-price">$120</div>
-                                    <div class="store-item-stock"><span class="dot"></span>24 en stock</div>
-                                </div>
-                                <div class="store-item">
-                                    <div class="store-thumb">🧃</div>
-                                    <div class="store-item-name">Jugo natural</div>
-                                    <div class="store-item-price">$180</div>
-                                    <div class="store-item-stock"><span class="dot"></span>18 en stock</div>
-                                </div>
-                                <div class="store-item">
-                                    <div class="store-thumb">💧</div>
-                                    <div class="store-item-name">Agua 1.5L</div>
-                                    <div class="store-item-price">$90</div>
-                                    <div class="store-item-stock"><span class="dot"></span>42 en stock</div>
-                                </div>
-                                <div class="store-item">
-                                    <div class="store-thumb">☕</div>
-                                    <div class="store-item-name">Café molido</div>
-                                    <div class="store-item-price">$450</div>
-                                    <div class="store-item-stock"><span class="dot"></span>12 en stock</div>
-                                </div>
-                                <div class="store-item">
-                                    <div class="store-thumb">🍵</div>
-                                    <div class="store-item-name">Té verde</div>
-                                    <div class="store-item-price">$210</div>
-                                    <div class="store-item-stock"><span class="dot"></span>25 en stock</div>
-                                </div>
-                                <div class="store-item">
-                                    <div class="store-thumb">🥛</div>
-                                    <div class="store-item-name">Leche 1L</div>
-                                    <div class="store-item-price">$200</div>
-                                    <div class="store-item-stock"><span class="dot"></span>20 en stock</div>
-                                </div>
-                            </div>
-                            <div class="store-footer-mock">
-                                <span>6 productos · Actualizado ahora</span>
-                                <span class="cart">🛒 Ver carrito</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="platforms">
+          <article class="download-card android">
+            <div class="platform-top">
+              <div class="platform-icon">◉</div>
+              <div><h3>Android</h3><p>Teléfonos y tablets Android</p></div>
             </div>
-        </div>
-    </section>
+            <p class="description">Instala Nexora directamente en tu dispositivo Android. Si no sabes qué versión elegir, abajo tienes una explicación sencilla.</p>
+            <div class="file-list">
+              <span class="file-pill">Nexorax32.apk</span>
+              <span class="file-pill">Nexorax64.apk</span>
+            </div>
+            <div class="download-main">
+              <span>64 bits para la mayoría de los teléfonos actuales.</span>
+              <a class="download-btn" href="https://github.com/Leifdev0306/Tu-MiPyme/releases/latest/download/Nexorax64.apk">⬇ Descargar Android 64 bits</a>
+            </div>
+            <div class="android-alt-download">
+              <span>¿Tu dispositivo usa 32 bits?</span>
+              <a href="https://github.com/Leifdev0306/Tu-MiPyme/releases/latest/download/Nexorax32.apk">Descargar Android 32 bits →</a>
+            </div>
+          </article>
 
-    <!-- ===== DOWNLOADS ===== -->
-    <section id="downloads">
-        <div class="container">
-            <div class="section-tag fade-up">📲 Descargas oficiales</div>
-            <h2 class="section-title fade-up">Descarga <span class="accent">Tu MiPyme</span></h2>
-            <p class="section-subtitle fade-up">Elige la versión para tu dispositivo. Siempre descargarás la última versión disponible.</p>
-            <div class="downloads-grid">
-                <div class="download-card android64 fade-up" data-os="android">
-                    <div class="recommended-badge" style="display:none;">✦ RECOMENDADO PARA TI</div>
-                    <div class="download-icon">📱</div>
-                    <h3>Android 64 bits</h3>
-                    <p class="download-desc">Para la mayoría de dispositivos Android modernos (2017 en adelante).</p>
-                    <div class="download-meta"><span>📦 ~15-25 MB</span><span>•</span><span>🤖 Android 5.0+</span></div>
-                    <button class="download-btn download-trigger" data-platform="android64">Descargar APK</button>
-                </div>
-                <div class="download-card android32 fade-up" data-os="android">
-                    <div class="recommended-badge" style="display:none;">✦ RECOMENDADO PARA TI</div>
-                    <div class="download-icon">📱</div>
-                    <h3>Android 32 bits</h3>
-                    <p class="download-desc">Para dispositivos antiguos o si la versión de 64 bits no instala.</p>
-                    <div class="download-meta"><span>📦 ~15-25 MB</span><span>•</span><span>🤖 Android 5.0+</span></div>
-                    <button class="download-btn download-trigger" data-platform="android32">Descargar APK</button>
-                </div>
-                <div class="download-card windows fade-up" data-os="windows">
-                    <div class="recommended-badge" style="display:none;">✦ RECOMENDADO PARA TI</div>
-                    <div class="download-icon">💻</div>
-                    <h3>Windows (PC)</h3>
-                    <p class="download-desc">Instala Tu MiPyme en tu PC. Incluye todos los módulos, también la tienda en línea.</p>
-                    <div class="download-meta"><span>📦 Archivo comprimido</span><span>•</span><span>🪟 Windows 10/11</span></div>
-                    <button class="download-btn download-trigger" data-platform="windows">Descargar para PC</button>
-                </div>
+          <article class="download-card windows">
+            <div class="platform-top">
+              <div class="platform-icon">▦</div>
+              <div><h3>Windows</h3><p>Computadoras y portátiles</p></div>
             </div>
+            <p class="description">Lleva Nexora a tu PC y administra tu negocio con una pantalla amplia, ideal para inventario, ventas, reportes y sucursales.</p>
+            <div class="file-list">
+              <span class="file-pill">Nexora.rar</span>
+              <span class="file-pill">Windows</span>
+            </div>
+            <div class="download-main">
+              <span>Compatible con equipos Windows.</span>
+              <a class="download-btn" href="https://github.com/Leifdev0306/Tu-MiPyme/releases/latest/download/Nexora.rar">⬇ Descargar para Windows</a>
+            </div>
+          </article>
         </div>
-    </section>
 
-    <!-- ===== FEATURES ===== -->
-    <section id="features">
-        <div class="container">
-            <div class="section-tag fade-up">✨ Todo incluido</div>
-            <h2 class="section-title fade-up">Funciones que <span class="accent">lo cambian todo</span></h2>
-            <p class="section-subtitle fade-up">Herramientas diseñadas para que tomes el control total de tu negocio.</p>
-            <div class="features-grid">
-                <div class="feature-card fade-up"><div class="icon">🛍️</div><h3>Tienda en línea</h3><p>Crea tu tienda pública y comparte el enlace con tus clientes.</p><span class="feature-tag store">Nuevo v2.4.0</span></div>
-                <div class="feature-card fade-up"><div class="icon">📢</div><h3>Publicar productos</h3><p>Publica productos del inventario en la tienda con un toque.</p><span class="feature-tag store">Nuevo v2.4.0</span></div>
-                <div class="feature-card fade-up"><div class="icon">✏️</div><h3>Personaliza tu tienda</h3><p>Configura nombre, descripción y datos de contacto.</p><span class="feature-tag store">Nuevo v2.4.0</span></div>
-                <div class="feature-card fade-up"><div class="icon">⚡</div><h3>Ventas rápidas</h3><p>Agrega productos, cantidades, pago y cobra en segundos.</p><span class="feature-tag new">v2.3.2</span></div>
-                <div class="feature-card fade-up"><div class="icon">🔄</div><h3>Dos modos de venta</h3><p>Tiempo Real o Cierre Diario según tu forma de trabajar.</p><span class="feature-tag new">v2.3.2</span></div>
-                <div class="feature-card fade-up"><div class="icon">📦</div><h3>Inventario completo</h3><p>Stock, costos, márgenes, categorías y reabastecimiento.</p><span class="feature-tag free">Todos los planes</span></div>
-                <div class="feature-card fade-up"><div class="icon">☁️</div><h3>Funciona sin internet</h3><p>Trabaja offline y sincroniza al recuperar conexión.</p><span class="feature-tag new">Esencial</span></div>
-                <div class="feature-card fade-up"><div class="icon">🏪</div><h3>Multi-sucursal</h3><p>Administra varias sucursales desde una misma cuenta.</p><span class="feature-tag">Premium</span></div>
-                <div class="feature-card fade-up"><div class="icon">🔄</div><h3>Movimientos entre sucursales</h3><p>Transfiere productos entre puntos de venta fácilmente.</p><span class="feature-tag new">v2.3.2</span></div>
-                <div class="feature-card fade-up"><div class="icon">👥</div><h3>Vendedores y roles</h3><p>Gestiona vendedores, gestores, permisos y comisiones.</p><span class="feature-tag">Premium</span></div>
-                <div class="feature-card fade-up"><div class="icon">💰</div><h3>Nóminas y salarios</h3><p>Organiza empleados, salarios y comisiones.</p><span class="feature-tag">Premium</span></div>
-                <div class="feature-card fade-up"><div class="icon">🤝</div><h3>Clientes y proveedores</h3><p>Historial, saldos, compras y control de proveedores.</p><span class="feature-tag free">Todos los planes</span></div>
-                <div class="feature-card fade-up"><div class="icon">💳</div><h3>Deudas y cobros</h3><p>Registra saldos pendientes, pagos y cobros.</p><span class="feature-tag new">v2.3.2</span></div>
-                <div class="feature-card fade-up"><div class="icon">📊</div><h3>Reportes y estadísticas</h3><p>Analiza ventas, ganancias, productos y rendimiento.</p><span class="feature-tag">Premium</span></div>
-                <div class="feature-card fade-up"><div class="icon">📄</div><h3>Exportación profesional</h3><p>PDF, Excel y CSV para analizar fuera de la app.</p><span class="feature-tag">Premium</span></div>
-                <div class="feature-card fade-up"><div class="icon">🧾</div><h3>Facturación fiscal</h3><p>Herramientas integradas para facturación y gestión fiscal.</p><span class="feature-tag">Premium</span></div>
-                <div class="feature-card fade-up"><div class="icon">⚠️</div><h3>Mermas y pérdidas</h3><p>Registra daños, pérdidas y ajustes de inventario.</p><span class="feature-tag new">v2.3.2</span></div>
-                <div class="feature-card fade-up"><div class="icon">🎯</div><h3>Metas de ventas</h3><p>Define objetivos y mide el progreso del negocio.</p><span class="feature-tag free">Todos los planes</span></div>
-                <div class="feature-card fade-up"><div class="icon">📏</div><h3>Unidades y stock decimal</h3><p>Trabaja con kg, litros, metros y unidades personalizadas.</p><span class="feature-tag free">Todos los planes</span></div>
-                <div class="feature-card fade-up"><div class="icon">🔐</div><h3>Seguridad y permisos</h3><p>Controla accesos y limita la información por usuario.</p><span class="feature-tag">Premium</span></div>
-                <div class="feature-card fade-up"><div class="icon">⚙️</div><h3>Configuración flexible</h3><p>Personaliza opciones según tu forma de trabajar.</p><span class="feature-tag new">v2.3.2</span></div>
-                <div class="feature-card fade-up"><div class="icon">💸</div><h3>Gastos y egresos</h3><p>Controla los gastos para conocer el resultado real.</p><span class="feature-tag free">Todos los planes</span></div>
-                <div class="feature-card fade-up"><div class="icon">📈</div><h3>Resumen de negocio</h3><p>Consulta ventas, gastos, ganancia y stock de un vistazo.</p><span class="feature-tag free">Todos los planes</span></div>
-                <div class="feature-card fade-up"><div class="icon">💸</div><h3>Transferencias</h3><p>Registra y consulta movimientos organizados.</p><span class="feature-tag new">v2.3.2</span></div>
-                <div class="feature-card fade-up"><div class="icon">🛟</div><h3>Soporte integrado</h3><p>Contacta con soporte directamente desde la app.</p><span class="feature-tag new">v2.3.2</span></div>
-                <div class="feature-card fade-up"><div class="icon">🎁</div><h3>Alianzas y referidos</h3><p>Comparte la plataforma y aprovecha sus beneficios.</p><span class="feature-tag">Incluido</span></div>
-            </div>
+        <div class="download-help">
+          <div class="help-box">
+            <b>📱 ¿32 o 64 bits en Android?</b>
+            <p>En la mayoría de los teléfonos actuales puedes utilizar <strong>Nexorax64.apk</strong>. Si tu dispositivo es antiguo o sabes que utiliza 32 bits, utiliza <strong>Nexorax32.apk</strong>.</p>
+          </div>
+          <div class="help-box">
+            <b>💻 ¿Qué descargo para mi PC?</b>
+            <p>Si vas a utilizar Nexora en una computadora Windows, selecciona <strong>“Descargar para Windows”</strong>. El archivo descargado contiene la aplicación para PC.</p>
+          </div>
         </div>
-    </section>
 
-    <!-- ===== PLANS ===== -->
-    <section id="plans">
-        <div class="container">
-            <div class="section-tag fade-up">💎 Planes</div>
-            <h2 class="section-title fade-up">Elige el plan <span class="accent">para tu negocio</span></h2>
-            <p class="section-subtitle fade-up">Comienza con 3 días de prueba gratuita con todas las funciones Premium, incluida la tienda en línea.</p>
-            <div class="plans-grid">
-                <div class="plan-card fade-up">
-                    <div class="plan-trial">🎁 3 DÍAS GRATIS</div>
-                    <div class="plan-name">Normal</div>
-                    <div class="plan-price">$1,000 <small>CUP</small></div>
-                    <div class="plan-period">por mes</div>
-                    <ul class="plan-list">
-                        <li><span class="check">✓</span> Inventario básico (CRUD)</li>
-                        <li><span class="check">✓</span> Ventas con clientes</li>
-                        <li><span class="check">✓</span> Gestión de gastos</li>
-                        <li><span class="check">✓</span> Metas de ventas</li>
-                        <li><span class="check">✓</span> Sincronización offline</li>
-                        <li><span class="check">✓</span> Unidades de medida</li>
-                        <li><span class="check">✓</span> Catálogo público de tiendas</li>
-                        <li><span class="cross">✕</span> Administrar mi tienda</li>
-                        <li><span class="cross">✕</span> Publicar productos</li>
-                        <li><span class="cross">✕</span> Panel avanzado y KPIs</li>
-                        <li><span class="cross">✕</span> Exportación de reportes</li>
-                        <li>👤 <strong>Hasta 2 vendedores</strong></li>
-                    </ul>
-                    <button class="plan-btn outline download-trigger" data-platform="android64">Probar 3 días gratis</button>
-                    <div class="plan-note">Luego $1,000 CUP/mes</div>
-                </div>
-                <div class="plan-card popular fade-up">
-                    <div class="plan-badge">🔥 MÁS POPULAR</div>
-                    <div class="plan-name">Premium</div>
-                    <div class="plan-price">$1,500 <small>CUP</small></div>
-                    <div class="plan-period">por mes</div>
-                    <ul class="plan-list">
-                        <li><span class="check">✓</span> Todo lo del plan Normal</li>
-                        <li><span class="check">✓</span> <strong>Tienda en línea propia</strong></li>
-                        <li><span class="check">✓</span> <strong>Publicar productos ilimitados</strong></li>
-                        <li><span class="check">✓</span> <strong>Personalizar mi tienda</strong></li>
-                        <li><span class="check">✓</span> Panel con gráficos y KPIs</li>
-                        <li><span class="check">✓</span> Exportación PDF, Excel y CSV</li>
-                        <li><span class="check">✓</span> Ocultar costos a vendedores</li>
-                        <li><span class="check">✓</span> Gestión de proveedores</li>
-                        <li><span class="check">✓</span> Nóminas y salarios</li>
-                        <li>👥 Hasta 5 vendedores</li>
-                        <li>📞 Soporte prioritario</li>
-                    </ul>
-                    <button class="plan-btn download-trigger" data-platform="android64">Descargar ahora</button>
-                    <div class="plan-note">Incluye 3 días gratis · Sucursal adicional: +500 CUP</div>
-                </div>
-            </div>
-            <p class="plans-footnote">🏪 <strong>Sucursal adicional:</strong> +500 CUP/mes. Sin extras ocultos.</p>
+        <div class="download-warning">
+          <strong>⚠️ Importante para Android:</strong> Nexora se instala mediante un archivo APK y actualmente no se descarga desde Google Play. Por eso Android puede mostrar una advertencia de seguridad o pedirte permiso para instalar aplicaciones desde esta fuente. Si aparece, sigue las instrucciones de tu dispositivo únicamente si reconoces que estás instalando Nexora.
         </div>
-    </section>
-
-    <!-- ===== CHANGELOG ===== -->
-    <section id="changelog">
-        <div class="container">
-            <div class="section-tag fade-up">📖 Novedades</div>
-            <h2 class="section-title fade-up">Historial de <span class="accent">cambios</span></h2>
-            <p class="section-subtitle fade-up">Siempre mejorando para ti. Estas son las novedades de la última versión.</p>
-            <div class="changelog-list">
-                <div class="changelog-item latest fade-up">
-                    <div class="changelog-version">v2.4.0</div>
-                    <div class="changelog-date">19 sep 2026</div>
-                    <div class="changelog-desc">
-                        <strong>🛍️ Tienda en línea y catálogo público</strong>
-                        <span class="new-ribbon">✦ NUEVO</span>
-                        <ul>
-                            <li><strong>Tienda pública:</strong> cada negocio obtiene su propio catálogo accesible desde un enlace, sin instalar nada.</li>
-                            <li><strong>Publicar productos:</strong> publica productos del inventario con foto, precio y stock.</li>
-                            <li><strong>Personalización:</strong> configura nombre, descripción y datos de contacto.</li>
-                            <li><strong>Sincronización en vivo:</strong> los cambios del inventario se reflejan automáticamente.</li>
-                            <li><strong>Multiplataforma:</strong> la tienda funciona desde Android y Windows.</li>
-                            <li><strong>Interfaz renovada:</strong> mejoras visuales en catálogo y gestión.</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="changelog-item fade-up">
-                    <div class="changelog-version">v2.3.2</div>
-                    <div class="changelog-date">17 sep 2026</div>
-                    <div class="changelog-desc">
-                        <strong>🚀 Nuevos modos de venta y mejoras de gestión</strong>
-                        <ul>
-                            <li><strong>Modo Tiempo Real:</strong> registra cada venta al instante.</li>
-                            <li><strong>Modo Cierre Diario:</strong> ideal para negocios por jornada.</li>
-                            <li><strong>Control de stock:</strong> captura existencias y calcula ventas.</li>
-                            <li><strong>Sincronización:</strong> trabaja offline y sincroniza al conectar.</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="changelog-item fade-up">
-                    <div class="changelog-version">v2.1.7</div>
-                    <div class="changelog-date">17 ago 2026</div>
-                    <div class="changelog-desc">
-                        <strong>✨ Guía de usuario y mejoras en inventario</strong>
-                        <ul>
-                            <li>Guía interactiva al primer inicio.</li>
-                            <li>Estadísticas de margen y costos en inventario.</li>
-                            <li>Reabastecimiento mejorado con selección múltiple.</li>
-                            <li>Reportes por sucursal.</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="changelog-item fade-up">
-                    <div class="changelog-version">v2.1.6</div>
-                    <div class="changelog-date">13 ago 2026</div>
-                    <div class="changelog-desc">
-                        <strong>✨ Unidades de medida y stock decimal</strong>
-                        <ul>
-                            <li>Unidades personalizables (kg, L, metros, etc.).</li>
-                            <li>Stock con decimales.</li>
-                            <li>Sincronización más robusta.</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="changelog-item fade-up">
-                    <div class="changelog-version">v2.1.5</div>
-                    <div class="changelog-date">12 ago 2026</div>
-                    <div class="changelog-desc">
-                        <strong>✨ Nóminas y salarios integrados</strong>
-                        <ul>
-                            <li>Módulo de nóminas con comisiones.</li>
-                            <li>Gestión de empleados con salarios.</li>
-                            <li>Soporte offline mejorado.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== TESTIMONIOS ===== -->
-    <section id="testimonios">
-        <div class="container">
-            <div class="section-tag fade-up">💬 Testimonios</div>
-            <h2 class="section-title fade-up">Lo que dicen <span class="accent">nuestros clientes</span></h2>
-            <p class="section-subtitle fade-up">Empresarios que ya confían en Tu MiPyme para gestionar sus negocios.</p>
-            <div class="testimonials-grid">
-                <div class="testimonial-card fade-up">
-                    <div class="testimonial-quote">"Tu MiPyme me ha permitido llevar mi tienda de forma profesional sin necesidad de internet. El panel de control es espectacular."</div>
-                    <div class="testimonial-author">María G.</div>
-                    <div class="testimonial-role">Dueña de tienda de abarrotes</div>
-                </div>
-                <div class="testimonial-card fade-up">
-                    <div class="testimonial-quote">"Con la tienda en línea mis clientes ven el catálogo y el stock en tiempo real. Vendo más y pierdo menos tiempo."</div>
-                    <div class="testimonial-author">Carlos R.</div>
-                    <div class="testimonial-role">Gerente de cadena de farmacias</div>
-                </div>
-                <div class="testimonial-card fade-up">
-                    <div class="testimonial-quote">"El módulo de ventas es rapidísimo y la tienda en línea se sincroniza sola. ¡Recomendado!"</div>
-                    <div class="testimonial-author">Laura M.</div>
-                    <div class="testimonial-role">Emprendedora de moda</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== FAQ ===== -->
-    <section id="faq">
-        <div class="container">
-            <div class="section-tag fade-up">❓ Preguntas frecuentes</div>
-            <h2 class="section-title fade-up">Resolvemos tus <span class="accent">dudas</span></h2>
-            <p class="section-subtitle fade-up">Todo lo que necesitas saber antes de empezar.</p>
-            <div class="faq-list">
-                <details class="faq-item fade-up">
-                    <summary>¿Qué es la tienda en línea de Tu MiPyme?</summary>
-                    <div class="faq-answer">Es un catálogo público de tus productos al que tus clientes pueden acceder desde un enlace, sin instalar nada. Podrás publicar productos con foto, precio y stock, y personalizar el nombre y la descripción de tu tienda. Está disponible en el <strong>plan Premium</strong> y durante los 3 días de prueba gratuita.</div>
-                </details>
-                <details class="faq-item fade-up">
-                    <summary>¿Necesito internet para usar Tu MiPyme?</summary>
-                    <div class="faq-answer">No. La aplicación funciona completamente offline. Cuando recuperas la conexión, sincroniza automáticamente todos tus datos con la nube. La tienda en línea sí requiere conexión para que tus clientes puedan verla desde sus dispositivos.</div>
-                </details>
-                <details class="faq-item fade-up">
-                    <summary>¿Cómo instalo la versión de Windows?</summary>
-                    <div class="faq-answer">Descarga el archivo comprimido desde el botón de Windows, descomprímelo y ejecuta el instalador. Es compatible con Windows 10 y 11. Si Windows SmartScreen muestra una advertencia, selecciona "Más información" → "Ejecutar de todas formas".</div>
-                </details>
-                <details class="faq-item fade-up">
-                    <summary>¿Cuál es la diferencia entre 32 y 64 bits?</summary>
-                    <div class="faq-answer">La versión de <strong>64 bits</strong> es la recomendada para móviles Android modernos (fabricados desde ~2017). La de <strong>32 bits</strong> es para dispositivos antiguos o cuando la de 64 bits no instala correctamente.</div>
-                </details>
-                <details class="faq-item fade-up">
-                    <summary>¿Mis datos están seguros si pierdo el teléfono?</summary>
-                    <div class="faq-answer">Sí. Tus datos se sincronizan con la nube de forma cifrada. Al iniciar sesión en otro dispositivo con tu cuenta, toda tu información se restaura automáticamente, incluida la configuración de tu tienda en línea.</div>
-                </details>
-                <details class="faq-item fade-up">
-                    <summary>¿Puedo cambiar de plan después?</summary>
-                    <div class="faq-answer">Sí, puedes subir o bajar de plan en cualquier momento desde la configuración de la aplicación. Los cambios se aplican de inmediato y el cobro se prorratea.</div>
-                </details>
-                <details class="faq-item fade-up">
-                    <summary>¿Cómo funciona la prueba gratuita de 3 días?</summary>
-                    <div class="faq-answer">Al instalar la app obtienes acceso completo a todas las funciones Premium, incluida la tienda en línea, durante 3 días sin costo. Al terminar, puedes elegir el plan Normal ($1,000 CUP/mes) o Premium ($1,500 CUP/mes).</div>
-                </details>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== CTA ===== -->
-    <section class="cta-section">
-        <div class="container">
-            <h2>Empieza hoy mismo con <span class="grad">Tu MiPyme</span></h2>
-            <p>Prueba 3 días gratis con todas las funciones Premium, incluida tu <strong>tienda en línea</strong>. Disponible para Android y Windows.</p>
-            <div class="cta-actions">
-                <div class="primary-group">
-                    <button class="btn-primary btn-android download-trigger" data-platform="android64">
-                        📱 Descargar para Android
-                    </button>
-                    <button class="btn-primary btn-windows download-trigger" data-platform="windows">
-                        💻 Descargar para Windows
-                    </button>
-                </div>
-                <a href="#" class="fallback-link download-trigger" data-platform="android32">
-                    🔄 Si tu app no instala o tu móvil es antiguo, descarga la versión de 32 bits
-                </a>
-            </div>
-            <p class="version-info">Android 5.0+ · Windows 10/11 · ~15-25 MB · v2.4.0</p>
-        </div>
-    </section>
-
-    <!-- ===== FOOTER ===== -->
-    <footer>
-        <div class="container">
-            <p>&copy; 2026 <strong>Tu MiPyme</strong> · Todos los derechos reservados.</p>
-            <div class="footer-links">
-                <a href="https://leifdev0306.github.io/Portafolio/" target="_blank">Portafolio</a>
-                <a href="mailto:leifdev0306@gmail.com">Contacto</a>
-                <a href="https://github.com/leifdev0306" target="_blank">GitHub</a>
-            </div>
-        </div>
-    </footer>
-
-    <!-- ===== MODAL ===== -->
-    <div class="modal-overlay" id="downloadModal">
-        <div class="modal">
-            <div class="modal-icon" id="modalIcon">🛡️</div>
-            <h3 id="modalTitle">Confirmación de descarga</h3>
-            <div class="modal-scroll">
-                <div id="modalBodyAndroid">
-                    <p>Tu dispositivo puede mostrar un aviso estándar de seguridad al instalar la app. <strong>Tu MiPyme</strong> se distribuye por canales oficiales y está firmada.</p>
-                    <div class="modal-highlight">
-                        <strong>¿Por qué aparece el aviso?</strong><br />
-                        Es un mensaje automático de Android para apps que no vienen de Google Play. Descarga siempre desde los canales oficiales.
-                    </div>
-                    <div class="modal-note">
-                        <strong>💡 Para dispositivos antiguos:</strong> si la instalación falla, prueba con la versión de <strong>32 bits</strong> en la página principal.
-                    </div>
-                </div>
-                <div id="modalBodyWindows" style="display:none;">
-                    <p>Vas a descargar <strong>Tu MiPyme para Windows</strong>. El archivo viene en un paquete comprimido que deberás extraer antes de ejecutar el instalador.</p>
-                    <div class="modal-highlight">
-                        <strong>📦 Pasos para instalar:</strong><br />
-                        1. Descarga el archivo comprimido.<br />
-                        2. Descomprímelo con WinRAR, 7-Zip o el explorador de Windows.<br />
-                        3. Ejecuta el instalador y sigue las instrucciones.
-                    </div>
-                    <div class="modal-note">
-                        <strong>⚠️ Nota:</strong> si Windows SmartScreen muestra una advertencia, selecciona <strong>"Más información"</strong> → <strong>"Ejecutar de todas formas"</strong>. La app está firmada y es segura.
-                    </div>
-                </div>
-            </div>
-            <div class="modal-actions">
-                <button class="modal-btn cancel" id="modalCancel">Cancelar</button>
-                <button class="modal-btn confirm" id="modalContinue">Continuar descarga</button>
-            </div>
-        </div>
+        <p class="windows-note">Las descargas se actualizan desde la versión oficial de Nexora publicada en GitHub.</p>
+      </div>
     </div>
+  </section>
 
-    <!-- ===== TOAST ===== -->
-    <div class="toast" id="toast">
-        <div class="toast-icon">✅</div>
-        <div class="toast-text">
-            <strong id="toastLabel">Descarga iniciada</strong>
-            <span id="toastMsg">Tu descarga comenzará en un momento.</span>
-        </div>
+  <section class="section" id="funciones">
+    <div class="container">
+      <div class="section-head">
+        <div class="kicker"><i></i> Todo tu negocio en un solo lugar</div>
+        <h2>Herramientas que trabajan <span class="gradient-text">para ti.</span></h2>
+        <p class="lead">Nexora está pensada para que puedas trabajar rápido, entender lo que sucede en tu negocio y tomar decisiones con información clara.</p>
+      </div>
+
+      <div class="features-grid">
+        <article class="feature"><div class="feature-icon">⚡</div><h3>Ventas rápidas</h3><p>Realiza ventas de forma sencilla y consulta tus operaciones sin perder tiempo.</p></article>
+        <article class="feature"><div class="feature-icon">▣</div><h3>Inventario inteligente</h3><p>Controla existencias, productos, costos, márgenes y movimientos de tus sucursales.</p></article>
+        <article class="feature"><div class="feature-icon">↗</div><h3>Reportes inteligentes</h3><p>Convierte tus movimientos en información útil para conocer ventas, ganancias y gastos.</p></article>
+        <article class="feature"><div class="feature-icon">⌂</div><h3>Multi-sucursal</h3><p>Gestiona diferentes tiendas y consulta dónde se encuentran tus puntos de venta.</p></article>
+        <article class="feature"><div class="feature-icon">◈</div><h3>Modos de venta</h3><p>Trabaja con una experiencia flexible para adaptarte a la forma en que funciona tu negocio.</p></article>
+        <article class="feature"><div class="feature-icon">◎</div><h3>Control y organización</h3><p>Centraliza clientes, proveedores, gastos, movimientos y la operación diaria.</p></article>
+      </div>
     </div>
+  </section>
 
-    <script>
-        (function() {
-            'use strict';
+  <section class="section" id="mapa">
+    <div class="container">
+      <div class="section-head">
+        <div class="kicker"><i></i> Tus tiendas conectadas</div>
+        <h2>Visualiza tu negocio <span class="gradient-text">en el mapa.</span></h2>
+        <p class="lead">Con la gestión de sucursales puedes tener una visión más clara de tus puntos de venta y organizar mejor tu operación.</p>
+      </div>
 
-            // ============================================================
-            // 1. PARTÍCULAS
-            // ============================================================
-            const canvas = document.getElementById('money-canvas');
-            const ctx = canvas.getContext('2d');
-            let width, height;
-            const particles = [];
-            const NUM = 18;
-            const symbols = ['💵', '💰', '🪙', '💸', '🏦', '📈', '🛍️', '$', '€', '£', '¥'];
+      <div class="map-wrap">
+        <div class="map">
+          <div class="water"></div>
+          <div class="road r1"></div><div class="road r2"></div><div class="road r3"></div>
+          <span class="map-label" style="left:11%;top:20%">Centro</span>
+          <span class="map-label" style="left:70%;top:28%">Zona Norte</span>
+          <span class="map-label" style="left:22%;top:70%">Zona Comercial</span>
+          <span class="map-label" style="left:69%;top:78%">Zona Sur</span>
+          <div class="store-pin p1">⌂</div><div class="store-pin p2">⌂</div><div class="store-pin p3">⌂</div>
+        </div>
+        <div class="map-card">
+          <span class="mini">NEXORA · SUCURSALES</span>
+          <h3>Tu red de tiendas, más cerca.</h3>
+          <p>Consulta tus puntos de venta y organiza la operación de tu negocio desde una sola plataforma.</p>
+          <div class="map-badges"><span>3 sucursales</span><span>Inventario por tienda</span><span>Ubicación</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-            function resize() {
-                width = window.innerWidth;
-                height = window.innerHeight;
-                canvas.width = width * (window.devicePixelRatio || 1);
-                canvas.height = height * (window.devicePixelRatio || 1);
-                canvas.style.width = width + 'px';
-                canvas.style.height = height + 'px';
-                ctx.setTransform(window.devicePixelRatio || 1, 0, 0, window.devicePixelRatio || 1, 0, 0);
-            }
-            resize();
-            window.addEventListener('resize', resize);
+  <section class="section" id="tienda">
+    <div class="container">
+      <div class="section-head">
+        <div class="kicker"><i></i> El ecosistema Nexora</div>
+        <h2>Tu negocio no termina <span class="gradient-text">en la caja.</span></h2>
+        <p class="lead">Conecta la gestión interna de tu negocio con una presencia digital y una red pensada para ayudarte a crecer.</p>
+      </div>
 
-            class Particle {
-                constructor() {
-                    this.x = Math.random() * width;
-                    this.y = Math.random() * height;
-                    this.size = Math.random() * 26 + 14;
-                    this.speedX = (Math.random() - 0.5) * 0.35;
-                    this.speedY = (Math.random() - 0.5) * 0.35;
-                    this.opacity = Math.random() * 0.14 + 0.03;
-                    this.symbol = symbols[Math.floor(Math.random() * symbols.length)];
-                    this.rotation = Math.random() * Math.PI * 2;
-                    this.rotationSpeed = (Math.random() - 0.5) * 0.005;
-                }
-                update() {
-                    this.x += this.speedX;
-                    this.y += this.speedY;
-                    this.rotation += this.rotationSpeed;
-                    if (this.x < 0 || this.x > width) this.speedX *= -1;
-                    if (this.y < 0 || this.y > height) this.speedY *= -1;
-                }
-                draw() {
-                    ctx.save();
-                    ctx.translate(this.x, this.y);
-                    ctx.rotate(this.rotation);
-                    ctx.font = `${this.size}px "Segoe UI", "Arial", sans-serif`;
-                    ctx.textAlign = 'center';
-                    ctx.textBaseline = 'middle';
-                    ctx.fillStyle = `rgba(26, 92, 255, ${this.opacity})`;
-                    ctx.fillText(this.symbol, 0, 0);
-                    ctx.restore();
-                }
-            }
-            for (let i = 0; i < NUM; i++) particles.push(new Particle());
+      <div class="split">
+        <article class="big-card store">
+          <div class="kicker">NUEVO</div>
+          <h3>Mi Tienda Online</h3>
+          <p>Presenta tus productos en línea, crea una vitrina digital para tu negocio y facilita que tus clientes descubran lo que vendes.</p>
+          <div class="chips"><span>Catálogo</span><span>Productos</span><span>Presencia online</span><span>Clientes</span></div>
+          <div class="store-visual"></div>
+        </article>
+        <article class="big-card network">
+          <div class="kicker">RED NEXORA</div>
+          <h3>Conecta con otros negocios</h3>
+          <p>La Red Nexora crea un espacio donde los negocios pueden tener mayor visibilidad y formar parte de un ecosistema empresarial conectado.</p>
+          <div class="chips"><span>Descubre tiendas</span><span>Mapa</span><span>Negocios cercanos</span><span>Conexiones</span></div>
+          <div class="network-visual"><i></i><i></i><i></i><i></i><i></i></div>
+        </article>
+      </div>
+    </div>
+  </section>
 
-            function loop() {
-                ctx.clearRect(0, 0, width, height);
-                for (const p of particles) { p.update(); p.draw(); }
-                requestAnimationFrame(loop);
-            }
-            loop();
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div class="kicker"><i></i> Fácil de entender</div>
+        <h2>Diseñada para que <span class="gradient-text">trabajes, no luches con el sistema.</span></h2>
+        <p class="lead">Desde la primera pantalla hasta los reportes, Nexora busca que las funciones importantes estén donde las necesitas.</p>
+      </div>
+      <div class="faq">
+        <details open><summary>¿Qué puedo hacer con Nexora?</summary><p>Puedes gestionar ventas, inventario, productos, sucursales, movimientos, gastos, reportes y mucho más, además de utilizar Mi Tienda Online y las funciones de Red Nexora.</p></details>
+        <details><summary>¿En qué dispositivos funciona?</summary><p>Nexora está disponible para Android y Windows mediante las descargas que aparecen directamente en esta página.</p></details>
+        <details><summary>¿Cuál APK debo instalar?</summary><p>Para la mayoría de los dispositivos actuales se recomienda la versión de 64 bits. La versión de 32 bits está pensada para dispositivos compatibles con esa arquitectura.</p></details>
+        <details><summary>¿Por qué Android muestra una advertencia?</summary><p>Al instalar una aplicación mediante APK fuera de Google Play, Android puede mostrar una advertencia o solicitar permisos. Esto forma parte de las protecciones del sistema para aplicaciones instaladas desde fuentes externas.</p></details>
+        <details><summary>¿Puedo usar Nexora en una PC?</summary><p>Sí. Descarga la versión para Windows desde el botón correspondiente y tendrás una experiencia pensada para trabajar cómodamente en una pantalla grande.</p></details>
+        <details><summary>¿Dónde están las descargas?</summary><p>En esta misma página. Los botones “Descargar Android” y “Descargar para Windows” son accesos directos a los archivos de Nexora.</p></details>
+      </div>
+    </div>
+  </section>
+</main>
 
-            // ============================================================
-            // 2. CURSOR GLOW (solo desktop)
-            // ============================================================
-            const cursorGlow = document.getElementById('cursorGlow');
-            if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-                let mouseX = 0, mouseY = 0, glowX = 0, glowY = 0;
-                window.addEventListener('mousemove', (e) => {
-                    mouseX = e.clientX;
-                    mouseY = e.clientY;
-                });
-                function animateGlow() {
-                    glowX += (mouseX - glowX) * 0.12;
-                    glowY += (mouseY - glowY) * 0.12;
-                    cursorGlow.style.left = glowX + 'px';
-                    cursorGlow.style.top = glowY + 'px';
-                    requestAnimationFrame(animateGlow);
-                }
-                animateGlow();
-            }
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="logo.png" alt="Nexora Business">
+        <div><b>Nexora Business</b><span>Gestión empresarial inteligente</span></div>
+      </div>
+      <div class="footer-links">
+        <a href="#funciones">Funciones</a>
+        <a href="#tienda">Tienda Online</a>
+        <a href="#mapa">Sucursales</a>
+        <a href="#descargas">Descargar</a>
+      </div>
+    </div>
+    <p class="copyright">© 2026 Nexora Business. Una nueva forma de gestionar tu negocio.</p>
+  </div>
+</footer>
 
-            // ============================================================
-            // 3. TEMA (solo toggle manual · sin auto-detección)
-            // ============================================================
-            const themeToggle = document.createElement('button');
-            themeToggle.className = 'theme-toggle';
-            themeToggle.setAttribute('aria-label', 'Cambiar tema');
-            document.body.appendChild(themeToggle);
-
-            function applyTheme(theme) {
-                document.documentElement.setAttribute('data-theme', theme);
-                themeToggle.innerHTML = theme === 'dark' ? '☀️' : '🌙';
-                try { localStorage.setItem('tu-mipyme-theme', theme); } catch (e) {}
-            }
-
-            // Por defecto: claro siempre
-            let savedTheme = 'light';
-            try { savedTheme = localStorage.getItem('tu-mipyme-theme') || 'light'; } catch (e) {}
-            applyTheme(savedTheme);
-
-            themeToggle.addEventListener('click', () => {
-                const current = document.documentElement.getAttribute('data-theme');
-                applyTheme(current === 'dark' ? 'light' : 'dark');
-            });
-
-            // ============================================================
-            // 4. MENÚ MÓVIL
-            // ============================================================
-            const menuToggle = document.getElementById('menuToggle');
-            const mainNav = document.getElementById('mainNav');
-            menuToggle.addEventListener('click', () => mainNav.classList.toggle('open'));
-            document.querySelectorAll('#mainNav a, #mainNav button').forEach(el => {
-                el.addEventListener('click', () => mainNav.classList.remove('open'));
-            });
-            document.addEventListener('click', (e) => {
-                if (!mainNav.contains(e.target) && !menuToggle.contains(e.target)) {
-                    mainNav.classList.remove('open');
-                }
-            });
-
-            // ============================================================
-            // 5. HEADER SCROLL
-            // ============================================================
-            const header = document.getElementById('header');
-            let lastScroll = 0;
-            window.addEventListener('scroll', () => {
-                const y = window.scrollY;
-                header.classList.toggle('scrolled', y > 40);
-                lastScroll = y;
-            }, { passive: true });
-
-            // ============================================================
-            // 6. ANIMACIONES FADE-UP
-            // ============================================================
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-            document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-
-            // ============================================================
-            // 7. CONTADORES
-            // ============================================================
-            const counterObs = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting && !entry.target.dataset.animated) {
-                        entry.target.dataset.animated = 'true';
-                        const el = entry.target;
-                        const target = parseInt(el.dataset.count, 10);
-                        const suffix = el.dataset.suffix || '';
-                        const duration = 1400;
-                        const start = performance.now();
-                        function step(now) {
-                            const p = Math.min((now - start) / duration, 1);
-                            const eased = 1 - Math.pow(1 - p, 3);
-                            el.textContent = Math.floor(target * eased).toLocaleString('es-ES') + suffix;
-                            if (p < 1) requestAnimationFrame(step);
-                            else el.textContent = target.toLocaleString('es-ES') + suffix;
-                        }
-                        requestAnimationFrame(step);
-                        counterObs.unobserve(el);
-                    }
-                });
-            }, { threshold: 0.4 });
-            document.querySelectorAll('[data-count]').forEach(el => counterObs.observe(el));
-
-            // ============================================================
-            // 8. DETECCIÓN DE SO
-            // ============================================================
-            function detectOS() {
-                const ua = (navigator.userAgent || '').toLowerCase();
-                if (ua.includes('windows')) return 'windows';
-                if (ua.includes('android')) return 'android';
-                return 'other';
-            }
-            function highlightRecommended() {
-                const os = detectOS();
-                if (os !== 'android' && os !== 'windows') return;
-                document.querySelectorAll('.download-card').forEach(card => {
-                    if (card.dataset.os === os) {
-                        card.classList.add('recommended');
-                        const badge = card.querySelector('.recommended-badge');
-                        if (badge) badge.style.display = 'inline-block';
-                    }
-                });
-            }
-            highlightRecommended();
-
-            // ============================================================
-            // 9. DESCARGAS
-            // ============================================================
-            const modal = document.getElementById('downloadModal');
-            const modalCancel = document.getElementById('modalCancel');
-            const modalContinue = document.getElementById('modalContinue');
-            const modalIcon = document.getElementById('modalIcon');
-            const modalTitle = document.getElementById('modalTitle');
-            const bodyAndroid = document.getElementById('modalBodyAndroid');
-            const bodyWindows = document.getElementById('modalBodyWindows');
-            const toast = document.getElementById('toast');
-            const toastLabel = document.getElementById('toastLabel');
-            const toastMsg = document.getElementById('toastMsg');
-
-            const fallback64 = 'https://github.com/Leifdev0306/Tu-MiPyme/releases/latest/download/TuMiPyme64.apk';
-            const fallback32 = 'https://github.com/Leifdev0306/Tu-MiPyme/releases/latest/download/TuMiPyme32.apk';
-            const fallbackWindows = 'https://github.com/Leifdev0306/Tu-MiPyme/releases/latest/download/TuMiPyme.rar';
-
-            let url64 = fallback64;
-            let url32 = fallback32;
-            let urlWindows = fallbackWindows;
-            let pendingPlatform = 'android64';
-
-            async function loadUrls() {
-                try {
-                    const res = await fetch('https://api.github.com/repos/Leifdev0306/Tu-MiPyme/releases/latest');
-                    if (!res.ok) throw new Error('API error');
-                    const data = await res.json();
-                    const assets = data.assets || [];
-                    const apk64 = assets.find(a => a.name === 'TuMiPyme64.apk');
-                    const apk32 = assets.find(a => a.name === 'TuMiPyme32.apk');
-                    const win = assets.find(a =>
-                        /TuMiPyme/i.test(a.name) && /\.(rar|zip|exe|msi|7z)$/i.test(a.name)
-                    ) || assets.find(a =>
-                        /(windows|pc|win)/i.test(a.name) && /\.(rar|zip|exe|msi|7z)$/i.test(a.name)
-                    );
-                    if (apk64) url64 = apk64.browser_download_url;
-                    if (apk32) url32 = apk32.browser_download_url;
-                    if (win) urlWindows = win.browser_download_url;
-                    console.log('[Tu MiPyme] URLs:', { url64, url32, urlWindows });
-                } catch (err) {
-                    console.warn('[Tu MiPyme] Usando fallbacks', err);
-                }
-            }
-            loadUrls();
-
-            function setModalContent(platform) {
-                if (platform === 'windows') {
-                    modalIcon.textContent = '🪟';
-                    modalTitle.textContent = 'Descargar para Windows';
-                    bodyAndroid.style.display = 'none';
-                    bodyWindows.style.display = 'block';
-                    modalContinue.textContent = 'Descargar para PC';
-                } else {
-                    modalIcon.textContent = '🛡️';
-                    modalTitle.textContent = 'Confirmación de descarga';
-                    bodyAndroid.style.display = 'block';
-                    bodyWindows.style.display = 'none';
-                    modalContinue.textContent = 'Continuar descarga';
-                }
-            }
-
-            function showToast(label, msg) {
-                toastLabel.textContent = label;
-                toastMsg.textContent = msg;
-                toast.classList.add('show');
-                clearTimeout(showToast._t);
-                showToast._t = setTimeout(() => toast.classList.remove('show'), 4200);
-            }
-
-            function openModal(platform) {
-                pendingPlatform = platform || 'android64';
-                setModalContent(pendingPlatform);
-                modal.classList.add('active');
-            }
-            function closeModal() { modal.classList.remove('active'); }
-
-            function triggerDownload(platform) {
-                let url = '';
-                let label = '';
-                if (platform === 'android64') { url = url64; label = 'Android 64 bits'; }
-                else if (platform === 'android32') { url = url32; label = 'Android 32 bits'; }
-                else if (platform === 'windows') { url = urlWindows; label = 'Windows (PC)'; }
-
-                if (!url) {
-                    showToast('⚠️ No disponible', 'No se encontró el enlace de descarga.');
-                    return;
-                }
-                const a = document.createElement('a');
-                a.href = url;
-                a.target = '_blank';
-                a.rel = 'noopener noreferrer';
-                a.style.display = 'none';
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                showToast('✅ Descarga iniciada', `Tu MiPyme v2.4.0 para ${label} se está descargando.`);
-            }
-
-            document.querySelectorAll('.download-trigger').forEach(el => {
-                el.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    openModal(this.dataset.platform || 'android64');
-                });
-            });
-
-            modalCancel.addEventListener('click', closeModal);
-            modalContinue.addEventListener('click', () => {
-                triggerDownload(pendingPlatform);
-                closeModal();
-            });
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) closeModal();
-            });
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') closeModal();
-            });
-
-            // ============================================================
-            // 10. HASH
-            // ============================================================
-            if (window.location.hash) {
-                const id = window.location.hash.replace('#', '');
-                const target = document.getElementById(id);
-                if (target) {
-                    const det = target.closest('details');
-                    if (det) det.open = true;
-                }
-            }
-        })();
-    </script>
+<script>
+  const nav = document.querySelector('.nav-links');
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => nav.classList.remove('open'));
+  });
+</script>
 </body>
 </html>
